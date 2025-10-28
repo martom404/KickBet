@@ -1,10 +1,31 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
 
-### STS ###
+### Maven ###
+target/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper.jar
+
+### Spring Boot ###
+HELP.md
+application-*.properties
+application-*.yml
+*.db
+*.sql
+.env
+*.env
+
+### Logs ###
+logs/
+*.log
+*.out
+*.err
+
+### STS / Spring Tool Suite ###
 .apt_generated
 .classpath
 .factorypath
@@ -14,10 +35,11 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +53,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### OS pliki ###
+.DS_Store
+Thumbs.db
+
+### Testy ###
+/test-output/
+surefire-reports/

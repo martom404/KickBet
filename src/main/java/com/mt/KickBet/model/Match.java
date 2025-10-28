@@ -9,31 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_users_username", columnNames = "username"),
-        @UniqueConstraint(name = "uk_users_email", columnNames = "email")
-})
+@Table(name = "matches")
 @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor
-public class User {
+public class Match {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
-    private String email;
+    @Column(nullable = false, length = 80)
+    private String homeTeam;
 
-    @Column(nullable = false, length = 100)
-    private String username;
-
-    @Column(nullable = false, length = 100)
-    private String passwordHash;
+    @Column(nullable = false, length = 80)
+    private String awayTeam;
 
     @Column(nullable = false)
-    private int points = 0;
+    private LocalDateTime startTime;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    @Column()
+    private Result finalResult;
 
     @Column(updatable = false)
     @CreationTimestamp
@@ -43,6 +37,6 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "match")
     private List<Bet> bets = new ArrayList<>();
 }
