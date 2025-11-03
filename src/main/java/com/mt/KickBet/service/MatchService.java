@@ -1,6 +1,7 @@
 package com.mt.KickBet.service;
 
 import com.mt.KickBet.dto.match.CreateMatchRequest;
+import com.mt.KickBet.dto.match.UpdateMatchRequest;
 import com.mt.KickBet.model.Match;
 import com.mt.KickBet.model.Result;
 import com.mt.KickBet.repository.MatchRepository;
@@ -46,5 +47,14 @@ public class MatchService {
 
     public void deleteMatch(Long id) {
         matchRepository.deleteById(id);
+    }
+
+    public Optional<Match> updateMatch(Long matchId, UpdateMatchRequest request) {
+        return matchRepository.findById(matchId).map(match -> {
+            match.setHomeTeam(request.homeTeam());
+            match.setAwayTeam(request.awayTeam());
+            match.setStartTime(request.startTime());
+            return matchRepository.save(match);
+        });
     }
 }
