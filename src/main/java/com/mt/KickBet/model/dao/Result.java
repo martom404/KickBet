@@ -1,4 +1,4 @@
-package com.mt.KickBet.model;
+package com.mt.KickBet.model.dao;
 
 public enum Result {
     HOME,

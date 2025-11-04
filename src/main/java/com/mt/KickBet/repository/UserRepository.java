@@ -1,6 +1,7 @@
 package com.mt.KickBet.repository;
 
-import com.mt.KickBet.model.User;
+
+import com.mt.KickBet.model.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

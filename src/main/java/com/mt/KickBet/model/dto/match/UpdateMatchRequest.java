@@ -1,4 +1,4 @@
-package com.mt.KickBet.dto.match;
+package com.mt.KickBet.model.dto.match;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.Future;
@@ -28,4 +28,5 @@ public record UpdateMatchRequest(
         LocalDateTime startTime
 ) {
 }
+
 

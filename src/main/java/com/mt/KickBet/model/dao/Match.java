@@ -1,4 +1,4 @@
-package com.mt.KickBet.model;
+package com.mt.KickBet.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,32 +17,25 @@ import java.util.List;
                 @Index(name = "idx_matches_start_time", columnList = "start_time")
         }
 )
-@Getter @Setter
-@Builder @NoArgsConstructor @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Data @AllArgsConstructor @NoArgsConstructor
+@Builder
 public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
     private Long id;
 
     @Column(name = "home_team", nullable = false, length = 80)
-    @ToString.Include
     private String homeTeam;
 
     @Column(name = "away_team", nullable = false, length = 80)
-    @ToString.Include
     private String awayTeam;
 
     @Column(name = "start_time", nullable = false)
-    @ToString.Include
     private LocalDateTime startTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "final_result", nullable = true)
+    @Column(name = "final_result")
     private Result finalResult;
 
     @Column(updatable = false)
@@ -55,7 +48,6 @@ public class Match {
 
     @OneToMany(mappedBy = "match")
     @Builder.Default
-    @ToString.Exclude
     @JsonIgnore
     private List<Bet> bets = new ArrayList<>();
 

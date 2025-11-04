@@ -1,10 +1,12 @@
 package com.mt.KickBet.service;
 
-import com.mt.KickBet.dto.match.CreateMatchRequest;
-import com.mt.KickBet.dto.match.UpdateMatchRequest;
-import com.mt.KickBet.model.Match;
-import com.mt.KickBet.model.Result;
+import com.mt.KickBet.model.dao.Match;
+import com.mt.KickBet.model.dao.Result;
+import com.mt.KickBet.model.dto.match.CreateMatchRequest;
+import com.mt.KickBet.model.dto.match.UpdateMatchRequest;
+
 import com.mt.KickBet.repository.MatchRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,6 +21,7 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
+    @Transactional
     public Match createMatch(CreateMatchRequest request) {
         Match match = Match.builder()
                 .homeTeam(request.homeTeam())
@@ -38,6 +41,7 @@ public class MatchService {
         return matchRepository.findById(id);
     }
 
+    @Transactional
     public Optional<Match> setFinalResult(Long matchId, Result result) {
         return matchRepository.findById(matchId).map(match -> {
             match.setFinalResult(result);
@@ -45,10 +49,12 @@ public class MatchService {
         });
     }
 
+    @Transactional
     public void deleteMatch(Long id) {
         matchRepository.deleteById(id);
     }
 
+    @Transactional
     public Optional<Match> updateMatch(Long matchId, UpdateMatchRequest request) {
         return matchRepository.findById(matchId).map(match -> {
             match.setHomeTeam(request.homeTeam());

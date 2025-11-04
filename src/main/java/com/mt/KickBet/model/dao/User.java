@@ -1,4 +1,4 @@
-package com.mt.KickBet.model;
+package com.mt.KickBet.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -21,24 +21,17 @@ import java.util.List;
                 @Index(name = "idx_users_points", columnList = "points")
         }
 )
-@Getter @Setter
-@Builder @NoArgsConstructor @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    @ToString.Include
     private Long id;
 
     @Column(nullable = false, length = 255)
-    @ToString.Include
     private String email;
 
     @Column(nullable = false, length = 100)
-    @ToString.Include
     private String username;
 
     @Column(nullable = false, length = 60)
@@ -46,12 +39,10 @@ public class User {
     private String passwordHash;
 
     @Column(nullable = false)
-    @Builder.Default
     private int points = 0;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     private Role role = Role.USER;
 
     @Column(updatable = false)
@@ -63,17 +54,13 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user")
-    @Builder.Default
-    @ToString.Exclude
     @JsonIgnore
     private List<Bet> bets = new ArrayList<>();
 
     @Column(nullable = false)
-    @Builder.Default
     private boolean active = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private boolean locked = false;
 
 }
