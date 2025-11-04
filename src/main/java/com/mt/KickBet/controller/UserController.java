@@ -1,6 +1,7 @@
 package com.mt.KickBet.controller;
 
-import com.mt.KickBet.model.User;
+
+import com.mt.KickBet.model.dao.User;
 import com.mt.KickBet.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
