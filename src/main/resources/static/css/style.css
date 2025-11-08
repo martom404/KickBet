@@ -204,6 +204,41 @@ body.admin-page {
     background-color: #f8f9fa;
 }
 
+/* Auth Page */
+body.auth-page {
+    background-color: #e9edf8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container {
+    flex: 1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.auth-card {
+    border-radius: 12px;
+    border: 1px solid #d7dcf5;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.auth-heading {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.auth-page footer {
+    margin-top: auto;
+    background-color: #f8f9fa;
+    color: #4b5563;
+}
+
+.auth-page footer p {
+    color: inherit;
+}
+
 body.ranking-page footer {
     background: transparent;
     color: white;
