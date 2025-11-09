@@ -20,45 +20,66 @@
 
             <div class="card auth-card">
                 <div class="card-body p-4">
-                    <form th:action="@{/register}" method="post">
+                    <form th:action="@{/register}" method="post" th:object="${form}">
+
+                        <div class="alert alert-success" role="alert"
+                             th:if="${successMessage != null}"
+                             th:text="${successMessage}">
+                            Poprawnie zarejestrowano użytkownika w systemie.
+                        </div>
+
+                        <div class="alert alert-danger" role="alert"
+                             th:if="${#fields.hasGlobalErrors()}"
+                             th:each="err : ${#fields.globalErrors()}"
+                             th:text="${err}">Wystąpił błąd.
+                        </div>
+
                         <div class="mb-3">
                             <label for="username" class="form-label">Nazwa użytkownika</label>
                             <input type="text"
                                    class="form-control"
+                                   th:classappend="${#fields.hasErrors('username')}? ' is-invalid'"
                                    id="username"
-                                   name="username"
+                                   th:field="*{username}"
                                    placeholder="np. jan_kowalski"
                                    required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Błąd</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Adres e-mail</label>
                             <input type="email"
                                    class="form-control"
+                                   th:classappend="${#fields.hasErrors('email')}? ' is-invalid'"
                                    id="email"
-                                   name="email"
+                                   th:field="*{email}"
                                    placeholder="name@example.com"
                                    required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Błąd</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Hasło</label>
                             <input type="password"
                                    class="form-control"
+                                   th:classappend="${#fields.hasErrors('password')}? ' is-invalid'"
                                    id="password"
-                                   name="password"
+                                   th:field="*{password}"
                                    minlength="8"
                                    required>
                             <div class="form-text">Minimum 8 znaków – im bardziej zróżnicowane, tym lepiej.</div>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Błąd</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Powtórz hasło</label>
                             <input type="password"
                                    class="form-control"
+                                   th:classappend="${#fields.hasErrors('confirmPassword')}? ' is-invalid'"
                                    id="confirmPassword"
-                                   name="confirmPassword"
+                                   th:field="*{confirmPassword}"
                                    required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Błąd</div>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 mb-2">Utwórz konto</button>

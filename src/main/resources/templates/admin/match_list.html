@@ -65,7 +65,9 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <form th:action="@{/admin/matches/{id}/result(id=${match.id})}" method="post" class="d-inline">
-                                            <input type="hidden" name="result" value="HOME">
+                                            <input type="hidden"
+                                                   name="result"
+                                                   value="HOME">
                                             <button type="submit" class="dropdown-item">
                                                 <i class="bi bi-check-circle text-success"></i> HOME
                                             </button>
@@ -73,7 +75,9 @@
                                     </li>
                                     <li>
                                         <form th:action="@{/admin/matches/{id}/result(id=${match.id})}" method="post" class="d-inline">
-                                            <input type="hidden" name="result" value="DRAW">
+                                            <input type="hidden"
+                                                   name="result"
+                                                   value="DRAW">
                                             <button type="submit" class="dropdown-item">
                                                 <i class="bi bi-dash-circle text-info"></i> REMIS
                                             </button>
@@ -81,7 +85,9 @@
                                     </li>
                                     <li>
                                         <form th:action="@{/admin/matches/{id}/result(id=${match.id})}" method="post" class="d-inline">
-                                            <input type="hidden" name="result" value="AWAY">
+                                            <input type="hidden"
+                                                   name="result"
+                                                   value="AWAY">
                                             <button type="submit" class="dropdown-item">
                                                 <i class="bi bi-x-circle text-danger"></i> AWAY
                                             </button>

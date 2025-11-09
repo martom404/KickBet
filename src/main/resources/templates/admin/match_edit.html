@@ -21,17 +21,36 @@
                     <form th:action="@{/admin/matches/{id}/edit(id=${matchId})}" th:method="POST" th:object="${form}">
                         <div class="mb-3">
                             <label for="homeTeam" class="form-label">Gospodarze</label>
-                            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('homeTeam')}? ' is-invalid'" id="homeTeam" th:field="*{homeTeam}" required maxlength="80" pattern="^[\p{L} .-]{2,80}$">
+                            <input type="text"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('homeTeam')}? ' is-invalid'"
+                                   id="homeTeam"
+                                   th:field="*{homeTeam}"
+                                   required
+                                   maxlength="80"
+                                   pattern="^[\p{L} .-]{2,80}$">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('homeTeam')}" th:errors="*{homeTeam}">Błąd</div>
                         </div>
                         <div class="mb-3">
                             <label for="awayTeam" class="form-label">Goście</label>
-                            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('awayTeam')}? ' is-invalid'" id="awayTeam" th:field="*{awayTeam}" required maxlength="80" pattern="^[\p{L} .-]{2,80}$">
+                            <input type="text"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('awayTeam')}? ' is-invalid'"
+                                   id="awayTeam"
+                                   th:field="*{awayTeam}"
+                                   required
+                                   maxlength="80"
+                                   pattern="^[\p{L} .-]{2,80}$">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('awayTeam')}" th:errors="*{awayTeam}">Błąd</div>
                         </div>
                         <div class="mb-3">
                             <label for="startTime" class="form-label">Data i godzina rozpoczęcia</label>
-                            <input type="datetime-local" class="form-control" th:classappend="${#fields.hasErrors('startTime')}? ' is-invalid'" id="startTime" th:field="*{startTime}" required>
+                            <input type="datetime-local"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('startTime')}? ' is-invalid'"
+                                   id="startTime"
+                                   th:field="*{startTime}"
+                                   required>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Błąd</div>
                         </div>
                         <div class="d-flex gap-2">

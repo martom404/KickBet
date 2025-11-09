@@ -36,9 +36,7 @@ public class AdminMatchMvcController {
     }
 
     @PostMapping
-    public String createMatch(@Valid @ModelAttribute("form") CreateMatchRequest form,
-                              BindingResult bindingResult,
-                              Model model) {
+    public String createMatch(@Valid @ModelAttribute("form") CreateMatchRequest form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "admin/match_form";
         }
@@ -63,10 +61,7 @@ public class AdminMatchMvcController {
     }
 
     @PostMapping("/{id}/edit")
-    public String updateMatch(@PathVariable Long id,
-                              @Valid @ModelAttribute("form") UpdateMatchRequest form,
-                              BindingResult bindingResult,
-                              Model model) {
+    public String updateMatch(@PathVariable Long id, @Valid @ModelAttribute("form") UpdateMatchRequest form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("matchId", id);
             return "admin/match_edit";

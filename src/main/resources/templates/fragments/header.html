@@ -7,25 +7,31 @@
 <header th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
+
             <a class="navbar-brand" th:href="@{/}">
-                <img th:src="@{/assets/img/kickbet.png}" alt="KickBet" height="30" class="d-inline-block align-top">
                 KickBet
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}">Strona główna</a>
                     </li>
+
                     <!-- TODO: Po implementacji logowania pokazać ten link dla usera zalogowanego -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/my-bets}">Moje zakłady</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/ranking}">Ranking</a>
                     </li>
+
                     <!-- TODO: Po implementacji logowania pokazać ten link dla admina -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/admin/matches}">Panel admina</a>
@@ -34,15 +40,19 @@
                     <li class="nav-item" th:if="${user == null}">
                         <a class="nav-link" th:href="@{/login}">Logowanie</a>
                     </li>
+
                     <li class="nav-item" th:if="${user == null}">
                         <a class="nav-link" th:href="@{/register}">Rejestracja</a>
                     </li>
+
                     <li class="nav-item" th:if="${user != null}">
                         <span class="nav-link">Witaj, <span th:text="${user.username}"></span></span>
                     </li>
+
                     <li class="nav-item" th:if="${user != null}">
                         <a class="nav-link" th:href="@{/logout}">Wyloguj</a>
-                    </li> 
+                    </li>
+
                 </ul>
             </div>
         </div>

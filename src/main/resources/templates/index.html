@@ -13,9 +13,16 @@
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container">
+
     <div class="hero-section text-center">
         <h1 class="display-4 mb-4">Witaj w KickBet! <i class="bi bi-trophy-fill text-warning"></i></h1>
         <p class="lead mb-4">Obstawiaj wyniki meczów piłkarskich i wygrywaj punkty!</p>
+    </div>
+
+    <div class="text-center">
+        <img th:src="@{/assets/img/kickbet.png}"
+             alt="KickBet"
+             height="400">
     </div>
 
     <div class="row mt-4">
@@ -68,3 +75,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+
