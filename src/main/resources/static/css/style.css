@@ -1,11 +1,46 @@
 /* Global Styles */
 body {
-    background-color: #f8f9fa;
+    background: linear-gradient(180deg, #e4ebff 0%, #ffffff 65%, #f8fbff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-navbar {
+    background: #0D1733;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(13, 23, 51, 0.25);
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link,
+.custom-navbar .navbar-toggler {
+    color: #ffffff;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link:focus {
+    color: #cbd5ff;
+}
+
+.custom-navbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.site-footer {
+    background: #0D1733;
+    color: #ffffff;
+    box-shadow: 0 -2px 12px rgba(13, 23, 51, 0.2);
+    margin-top: auto;
+}
+
+.site-footer p {
+    color: inherit;
 }
 
 /* Index Page Styles */
 body.index-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #dde6ff 0%, #ffffff 70%, #f4f7ff 100%);
     min-height: 100vh;
 }
 
@@ -71,20 +106,9 @@ body.index-page {
     transform: scale(1.05);
 }
 
-body.index-page footer {
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-body.index-page footer p {
-    color: white;
-}
-
 /* Ranking Page Styles */
 body.ranking-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: white;
     min-height: 100vh;
 }
 
@@ -97,7 +121,7 @@ body.ranking-page {
 }
 
 .ranking-header {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
     color: white;
     padding: 2rem;
     text-align: center;
@@ -124,7 +148,7 @@ body.ranking-page {
 }
 
 .table thead th {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: cornflowerblue;
     color: white;
     font-weight: 600;
     text-transform: uppercase;
@@ -190,23 +214,24 @@ body.ranking-page {
 }
 
 body.my-bets-page .page-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
     color: white;
     padding: 2rem;
 }
 
 body.my-bets-page .page-header h1 {
     color: white;
+    text-align: center;
 }
 
 body.my-bets-page,
 body.admin-page {
-    background-color: #f8f9fa;
+    background: linear-gradient(180deg, #dfe7ff 0%, #ffffff 70%, #f5f9ff 100%);
 }
 
 /* Auth Page */
 body.auth-page {
-    background-color: #e9edf8;
+    background: linear-gradient(180deg, #d9e2ff 0%, #ffffff 65%, #f2f6ff 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -229,23 +254,8 @@ body.auth-page {
     color: #1f2937;
 }
 
-.auth-page footer {
+.auth-page .site-footer {
     margin-top: auto;
-    background-color: #f8f9fa;
-    color: #4b5563;
-}
-
-.auth-page footer p {
-    color: inherit;
-}
-
-body.ranking-page footer {
-    background: transparent;
-    color: white;
-}
-
-body.ranking-page footer p {
-    color: white;
 }
 
 /* Ranking Badges */
