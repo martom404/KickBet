@@ -5,9 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -22,7 +26,7 @@ import java.util.List;
         }
 )
 @Data
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,4 +67,14 @@ public class User {
     @Column(nullable = false)
     private boolean locked = false;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final String ROLE_PREFIX = "ROLE_";
+        return List.of(new SimpleGrantedAuthority(ROLE_PREFIX + this.role));
+    }
+
+    @Override
+    public String getPassword() {
+        return passwordHash;
+    }
 }
