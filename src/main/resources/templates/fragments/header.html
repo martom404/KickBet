@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -19,8 +19,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
 
-                    <li class="nav-item" th:if="${user != null}">
-                        <span class="nav-link">Witaj, <span th:text="${user.username}"></span></span>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <span class="nav-link">Witaj, <span sec:authentication="name">Użytkownik</span></span>
                     </li>
 
                     <li class="nav-item">
@@ -31,8 +31,7 @@
                         <a class="nav-link" th:href="@{/matches}">Lista meczy</a>
                     </li>
 
-                    <!-- TODO: Po implementacji logowania pokazać ten link dla usera zalogowanego -->
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/my-bets}">Moje zakłady</a>
                     </li>
 
@@ -40,25 +39,23 @@
                         <a class="nav-link" th:href="@{/ranking}">Ranking</a>
                     </li>
 
-                    <!-- TODO: th:href po implementacji -->
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" >Mój profil</a>
                     </li>
 
-                    <!-- TODO: Po implementacji logowania pokazać ten link dla admina -->
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/admin/matches}">Panel admina</a>
                     </li>
                    
-                    <li class="nav-item" th:if="${user == null}">
+                    <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">Logowanie</a>
                     </li>
 
-                    <li class="nav-item" th:if="${user == null}">
+                    <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/register}">Rejestracja</a>
                     </li>
 
-                    <li class="nav-item" th:if="${user != null}">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/logout}">Wyloguj</a>
                     </li>
 

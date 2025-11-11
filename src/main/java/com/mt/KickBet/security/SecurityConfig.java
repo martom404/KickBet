@@ -29,12 +29,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/my-bets").authenticated()
-                        .requestMatchers("/admin/matches").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> response.sendRedirect(loginUrl))
-                        .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(loginUrl))
+                        .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/403"))
                 );
 
         return http.build();
