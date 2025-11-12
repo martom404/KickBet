@@ -16,10 +16,3 @@ public class MyBetsController {
         return "my_bets";
     }
 }
-
-
-
-
-
-
-
