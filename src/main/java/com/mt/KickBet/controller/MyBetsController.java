@@ -11,10 +11,7 @@ public class MyBetsController {
 
     @GetMapping
     public String showMyBets(Model model) {
-        // TODO: Po implementacji logowania pobierać zakłady zalogowanego użytkownika
-        // model.addAttribute("bets", betService.getBetsByUserId(currentUserId));
-        return "my_bets";
+        return "user/my_bets";
     }
 }
-
 

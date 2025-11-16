@@ -24,10 +24,6 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/}">Strona główna</a>
-                    </li>
-
-                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/matches}">Lista meczy</a>
                     </li>
 
@@ -40,7 +36,7 @@
                     </li>
 
                     <li class="nav-item" sec:authorize="hasRole('USER')">
-                        <a class="nav-link" >Mój profil</a>
+                        <a class="nav-link" th:href="@{/my-profile}">Mój profil</a>
                     </li>
 
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">

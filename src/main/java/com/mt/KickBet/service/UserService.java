@@ -22,22 +22,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public Optional<User> getUserByID(Long id) {
         return userRepository.findById(id);
-    }
-
-    @Transactional
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
     }
 
     @Transactional
@@ -56,5 +46,4 @@ public class UserService {
 
         userRepository.save(user);
     }
-
 }
