@@ -1,12 +1,12 @@
 package com.mt.KickBet.service;
 
-import com.mt.KickBet.model.dao.User;
+import com.mt.KickBet.exception.DuplicateUserException;
+import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
-import com.mt.KickBet.repository.UserRepository;
+import com.mt.KickBet.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.mt.KickBet.exception.DuplicateUserException;
 
 import java.util.List;
 import java.util.Optional;

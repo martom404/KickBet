@@ -1,6 +1,6 @@
 package com.mt.KickBet.security;
 
-import com.mt.KickBet.repository.UserRepository;
+import com.mt.KickBet.model.dao.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

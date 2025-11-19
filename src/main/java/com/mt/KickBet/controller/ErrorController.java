@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ErrorController {
+
     @GetMapping("/403")
     public String forbidden() {
         return "errors/403";
     }
+
 }
