@@ -1,8 +1,11 @@
-package com.mt.KickBet.model.dao;
+package com.mt.KickBet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,14 +16,12 @@ import java.time.LocalDateTime;
         name = "bets",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_bets_user_match", columnNames = {"user_id", "match_id"})
-        },
-        indexes = {
-                @Index(name = "idx_bets_user", columnList = "user_id"),
-                @Index(name = "idx_bets_match", columnList = "match_id")
         }
 )
 @Data
-@Builder @NoArgsConstructor @AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bet {
 
     @Id

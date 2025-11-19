@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FootballApiResponse {
-    
+
     @JsonProperty("matches")
     private List<FootballApiMatch> matches;
 }

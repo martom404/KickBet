@@ -1,8 +1,8 @@
-package com.mt.KickBet.model.dao;
+package com.mt.KickBet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,9 +20,6 @@ import java.util.List;
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_users_username", columnNames = "username"),
                 @UniqueConstraint(name = "uk_users_email", columnNames = "email")
-        },
-        indexes = {
-                @Index(name = "idx_users_points", columnList = "points")
         }
 )
 @Data
@@ -32,7 +29,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false, length = 100)

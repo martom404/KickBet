@@ -1,8 +1,11 @@
-package com.mt.KickBet.model.dao;
+package com.mt.KickBet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,12 +15,11 @@ import java.util.List;
 
 @Entity
 @Table(
-        name = "matches",
-        indexes = {
-                @Index(name = "idx_matches_start_time", columnList = "start_time")
-        }
+        name = "matches"
 )
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Match {
 
@@ -40,6 +42,10 @@ public class Match {
     @Enumerated(EnumType.STRING)
     @Column(name = "final_result")
     private Result finalResult;
+
+    @Column(name = "hidden", nullable = false)
+    @Builder.Default
+    private Boolean hidden = false;
 
     @Column(updatable = false)
     @CreationTimestamp
