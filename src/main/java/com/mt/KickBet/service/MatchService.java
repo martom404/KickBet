@@ -12,9 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MatchService {
@@ -25,13 +23,10 @@ public class MatchService {
         this.matchRepository = matchRepository;
     }
 
-    public List<Match> getAllMatches() {
+    public Page<Match> getAllMatches(int page, int size) {
         LocalDateTime now = LocalDateTime.now();
-        return matchRepository.findAll().stream()
-                .filter(match -> !Boolean.TRUE.equals(match.getHidden()))
-                .filter(match -> match.getFinalResult() == null)
-                .filter(match -> match.getStartTime().isAfter(now))
-                .collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(page, size);
+        return matchRepository.findAvailableMatches(now, pageable);
     }
 
     public Page<Match> getAllMatchesForAdmin(int page, int size) {
