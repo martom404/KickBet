@@ -27,7 +27,7 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "external_id", unique = true)
+    @Column(name = "external_id", nullable = false, unique = true)
     private Long externalId;
 
     @Column(name = "home_team", nullable = false, length = 80)
@@ -47,11 +47,11 @@ public class Match {
     @Builder.Default
     private Boolean hidden = false;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 

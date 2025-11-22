@@ -3,6 +3,7 @@ package com.mt.KickBet.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,34 +24,35 @@ import java.util.List;
         }
 )
 @Data
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 60)
+    @Column(name = "password_hash", nullable = false, length = 60)
     @JsonIgnore
     private String passwordHash;
 
-    @Column(nullable = false)
+    @Column(name = "points", nullable = false)
     private int points = 0;
 
-    @Column(nullable = false)
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -58,10 +60,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Bet> bets = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column(name = "active", nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @Column(name = "locked", nullable = false)
     private boolean locked = false;
 
     @Override

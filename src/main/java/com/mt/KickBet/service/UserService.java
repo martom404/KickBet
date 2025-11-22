@@ -5,10 +5,13 @@ import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
 import com.mt.KickBet.model.entity.User;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +25,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "points");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return userRepository.findAll(pageable);
     }
 
     public Optional<User> getUserByID(Long id) {

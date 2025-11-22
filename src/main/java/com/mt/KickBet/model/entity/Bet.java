@@ -39,18 +39,18 @@ public class Bet {
     private Match match;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "pick", nullable = false, length = 8)
+    @Column(name = "pick", nullable = false)
     private Result pick;
 
     @Column(nullable = false)
     @Builder.Default
     private Integer pointsAwarded = 0;
 
-    @Column(updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
