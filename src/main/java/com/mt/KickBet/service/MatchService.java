@@ -1,5 +1,6 @@
 package com.mt.KickBet.service;
 
+import com.mt.KickBet.model.dao.BetRepository;
 import com.mt.KickBet.model.dao.MatchRepository;
 import com.mt.KickBet.model.dto.match.CreateMatchRequest;
 import com.mt.KickBet.model.dto.match.UpdateMatchRequest;
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,19 +20,23 @@ import java.util.Optional;
 public class MatchService {
 
     private final MatchRepository matchRepository;
+    private final BetRepository betRepository;
 
-    public MatchService(MatchRepository matchRepository) {
+    public MatchService(MatchRepository matchRepository, BetRepository betRepository) {
         this.matchRepository = matchRepository;
+        this.betRepository = betRepository;
     }
 
     public Page<Match> getAllMatches(int page, int size) {
         LocalDateTime now = LocalDateTime.now();
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = Sort.by(Sort.Direction.ASC, "startTime");
+        Pageable pageable = PageRequest.of(page, size, sort);
         return matchRepository.findAvailableMatches(now, pageable);
     }
 
     public Page<Match> getAllMatchesForAdmin(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = Sort.by(Sort.Direction.ASC, "startTime");
+        Pageable pageable = PageRequest.of(page, size, sort);
         return matchRepository.findAll(pageable);
     }
 
@@ -68,6 +74,7 @@ public class MatchService {
 
     @Transactional
     public void deleteMatch(Long id) {
+        betRepository.deleteAllByMatchId(id);
         matchRepository.deleteById(id);
     }
 

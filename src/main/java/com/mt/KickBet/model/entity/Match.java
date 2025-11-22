@@ -27,7 +27,7 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "external_id", nullable = false, unique = true)
+    @Column(name = "external_id", unique = true)
     private Long externalId;
 
     @Column(name = "home_team", nullable = false, length = 80)

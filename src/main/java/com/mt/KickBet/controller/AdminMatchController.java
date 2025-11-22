@@ -34,13 +34,13 @@ public class AdminMatchController {
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("form", new CreateMatchRequest("", "", LocalDateTime.now()));
-        return "match_createform";
+        return "admin/match_createform";
     }
 
     @PostMapping
     public String createMatch(@Valid @ModelAttribute("form") CreateMatchRequest form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "match_createform";
+            return "admin/match_createform";
         }
         matchService.createMatch(form);
         return "redirect:/admin/matches";
@@ -57,7 +57,7 @@ public class AdminMatchController {
                     );
                     model.addAttribute("form", form);
                     model.addAttribute("matchId", id);
-                    return "admin/match_edit";
+                    return "admin/match_editform";
                 })
                 .orElse("redirect:/admin/matches");
     }
@@ -66,7 +66,7 @@ public class AdminMatchController {
     public String updateMatch(@PathVariable Long id, @Valid @ModelAttribute("form") UpdateMatchRequest form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("matchId", id);
-            return "match_editform";
+            return "admin/match_editform";
         }
         matchService.updateMatch(id, form);
         return "redirect:/admin/matches";
@@ -75,7 +75,7 @@ public class AdminMatchController {
     @PostMapping("/{id}/result")
     public String setResult(@PathVariable Long id, @RequestParam("result") String result) {
         try {
-            Result enumResult = Result.valueOf(result.toUpperCase());
+            Result enumResult = Result.valueOf(result);
             matchService.setFinalResult(id, enumResult);
         } catch (IllegalArgumentException e) {
         }

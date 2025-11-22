@@ -2,6 +2,7 @@ package com.mt.KickBet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ import java.util.List;
         }
 )
 @Data
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
