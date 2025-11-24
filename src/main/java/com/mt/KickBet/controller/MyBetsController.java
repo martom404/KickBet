@@ -27,6 +27,3 @@ public class MyBetsController {
         return "user/my_bets";
     }
 }
-
-
-
