@@ -2,10 +2,13 @@ package com.mt.KickBet.service;
 
 import com.mt.KickBet.model.dao.BetRepository;
 import com.mt.KickBet.model.dao.MatchRepository;
+import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.match.CreateMatchRequest;
 import com.mt.KickBet.model.dto.match.UpdateMatchRequest;
+import com.mt.KickBet.model.entity.Bet;
 import com.mt.KickBet.model.entity.Match;
 import com.mt.KickBet.model.entity.Result;
+import com.mt.KickBet.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,10 +25,14 @@ public class MatchService {
 
     private final MatchRepository matchRepository;
     private final BetRepository betRepository;
+    private final UserRepository userRepository;
+    private final BetService betService;
 
-    public MatchService(MatchRepository matchRepository, BetRepository betRepository) {
+    public MatchService(MatchRepository matchRepository, BetRepository betRepository, UserRepository userRepository ,BetService betService) {
         this.matchRepository = matchRepository;
         this.betRepository = betRepository;
+        this.userRepository = userRepository;
+        this.betService = betService;
     }
 
     public Page<Match> getAllMatches(int page, int size) {
@@ -68,12 +76,23 @@ public class MatchService {
     public void setFinalResult(Long id, Result result) {
         matchRepository.findById(id).ifPresent(match -> {
             match.setFinalResult(result);
+            match.setHidden(true);
             matchRepository.save(match);
+            betService.awardPointsForMatch(id, result);
         });
     }
 
     @Transactional
     public void deleteMatch(Long id) {
+        List<Bet> bets = betRepository.findAllByMatchId(id);
+
+        for (Bet bet : bets) {
+            if(bet.getPointsAwarded() != 0) {
+                User user = bet.getUser();
+                user.setPoints(user.getPoints() - bet.getPointsAwarded());
+                userRepository.save(user);
+            }
+        }
         betRepository.deleteAllByMatchId(id);
         matchRepository.deleteById(id);
     }

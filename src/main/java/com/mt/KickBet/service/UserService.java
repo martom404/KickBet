@@ -3,6 +3,7 @@ package com.mt.KickBet.service;
 import com.mt.KickBet.exception.DuplicateUserException;
 import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
+import com.mt.KickBet.model.entity.Role;
 import com.mt.KickBet.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class UserService {
     public Page<User> getAllUsers(int page, int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "points");
         Pageable pageable = PageRequest.of(page, size, sort);
-        return userRepository.findAll(pageable);
+        return userRepository.findAllByRoleIsNot(Role.ADMIN, pageable);
     }
 
     public Optional<User> getUserByID(Long id) {

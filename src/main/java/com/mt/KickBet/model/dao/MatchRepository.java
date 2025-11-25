@@ -1,6 +1,5 @@
 package com.mt.KickBet.model.dao;
 
-
 import com.mt.KickBet.model.entity.Match;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

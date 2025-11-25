@@ -6,6 +6,7 @@ body {
     flex-direction: column;
 }
 
+/* Navbar */
 .custom-navbar {
     background: #0D1733;
     color: #ffffff;
@@ -27,6 +28,7 @@ body {
     border-color: rgba(255, 255, 255, 0.4);
 }
 
+/* Footer */
 .site-footer {
     background: #0D1733;
     color: #ffffff;
@@ -38,39 +40,42 @@ body {
     color: inherit;
 }
 
-/* Index Page Styles */
+/* Page Backgrounds */
 body.index-page {
     background: linear-gradient(180deg, #dde6ff 0%, #ffffff 70%, #f4f7ff 100%);
-    min-height: 100vh;
 }
 
-.hero-section {
+body.ranking-page {
     background: white;
-    border-radius: 16px;
-    padding: 3rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
-.hero-section h1 {
-    color: #2d3748;
-    font-weight: 700;
+body.my-bets-page,
+body.admin-page {
+    background: linear-gradient(180deg, #dfe7ff 0%, #ffffff 70%, #f5f9ff 100%);
 }
 
-.hero-section p {
-    color: #4a5568;
-    font-size: 1.1rem;
+body.auth-page {
+    background: linear-gradient(180deg, #d9e2ff 0%, #ffffff 65%, #f2f6ff 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+body.auth-page .site-footer {
+    margin-top: auto;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .feature-card {
-    background: white;
-    border-radius: 16px;
     padding: 2rem;
     height: 100%;
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .feature-card:hover {
@@ -106,99 +111,46 @@ body.index-page {
     transform: scale(1.05);
 }
 
-/* Ranking Page Styles */
-body.ranking-page {
-    background: white;
-    min-height: 100vh;
+.auth-card {
+    border: 1px solid #d7dcf5;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.ranking-container {
+/* Hero Section */
+.hero-section {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    overflow: hidden;
+    padding: 3rem;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
-.ranking-header {
-    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    color: white;
-    padding: 2rem;
-    text-align: center;
-}
-
-.ranking-header h1 {
-    margin: 0;
+.hero-section h1 {
+    color: #2d3748;
     font-weight: 700;
-    font-size: 2rem;
 }
 
-/* Table Styles */
-.table-container,
-.bets-container {
+.hero-section p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+/* Containers */
+.content-container {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
-
-.bets-container {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-.table thead th {
-    background: cornflowerblue;
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-    padding: 1rem;
-    border: none;
+.auth-container {
+    flex: 1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
-.ranking-container .table thead th {
-    padding: 1.25rem 1rem;
-}
-
-.table tbody tr {
-    transition: all 0.3s ease;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.table tbody tr:hover {
-    background-color: #f8f9ff;
-    transform: translateX(2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.ranking-container .table tbody tr:hover {
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.table tbody td {
-    padding: 1rem;
-    vertical-align: middle;
-}
-
-.ranking-container .table tbody td {
-    padding: 1.25rem 1rem;
-}
-
-.badge {
-    padding: 0.5em 0.75em;
-    font-weight: 500;
-    font-size: 0.85rem;
-}
-
-.btn-group .btn {
-    border-radius: 6px;
-    margin: 0 2px;
-}
-
-/* Page Header Styles */
+/* Page Header */
 .page-header {
     background: white;
     padding: 1.5rem;
@@ -213,40 +165,15 @@ body.ranking-page {
     font-weight: 700;
 }
 
-body.my-bets-page .page-header {
+.page-header.gradient {
     background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
     color: white;
     padding: 2rem;
 }
 
-body.my-bets-page .page-header h1 {
+.page-header.gradient h1 {
     color: white;
     text-align: center;
-}
-
-body.my-bets-page,
-body.admin-page {
-    background: linear-gradient(180deg, #dfe7ff 0%, #ffffff 70%, #f5f9ff 100%);
-}
-
-/* Auth Page */
-body.auth-page {
-    background: linear-gradient(180deg, #d9e2ff 0%, #ffffff 65%, #f2f6ff 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.auth-container {
-    flex: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-}
-
-.auth-card {
-    border-radius: 12px;
-    border: 1px solid #d7dcf5;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 .auth-heading {
@@ -254,11 +181,41 @@ body.auth-page {
     color: #1f2937;
 }
 
-.auth-page .site-footer {
-    margin-top: auto;
+/* Tables */
+.table thead th {
+    background: cornflowerblue;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border: none;
 }
 
-/* Ranking Badges */
+.table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5em 0.75em;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
 .rank-badge {
     width: 45px;
     height: 45px;
@@ -305,7 +262,13 @@ body.auth-page {
     color: #2d3748;
 }
 
-/* Alert Styles */
+/* Buttons */
+.btn-group .btn {
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+/* Alerts */
 .alert {
     border-radius: 12px;
     border: none;
