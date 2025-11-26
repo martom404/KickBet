@@ -15,22 +15,26 @@
 <div class="container auth-container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
+
             <h1 class="auth-heading text-center mb-3">Logowanie</h1>
             <p class="text-center text-muted mb-4">Zaloguj się do swojego konta.</p>
 
             <div class="card auth-card">
                 <div class="card-body p-4">
                     <form th:action="@{/login}" method="post">
-                        <div class="alert alert-danger" role="alert"
+
+                        <div class="alert alert-danger"
                              th:if="${error != null}"
                              th:text="${error}">
                         </div>
+
                         <div class="mb-3">
                             <label for="username" class="form-label">Nazwa użytkownika</label>
                             <input type="text"
                                    class="form-control"
                                    id="username"
                                    name="username"
+                                   placeholder="Nazwa użytkownika"
                                    required>
                         </div>
 
@@ -40,12 +44,15 @@
                                    class="form-control"
                                    id="password"
                                    name="password"
-                                   minlength="8"
+                                   placeholder="Hasło"
                                    required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 mb-2">Zaloguj się</button>
-                        <a th:href="@{/register}" class="btn btn-outline-secondary w-100">Nie mam konta</a>
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary w-75 mb-2">Zaloguj się</button>
+                            <a th:href="@{/register}" class="btn btn-outline-secondary w-75">Nie mam konta</a>
+                        </div>
+
                     </form>
                 </div>
             </div>

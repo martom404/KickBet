@@ -30,20 +30,23 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        if (!model.containsAttribute("form")) {
-            model.addAttribute("form", new RegisterForm("", "", "", ""));
+        if (!model.containsAttribute("registerForm")) {
+            model.addAttribute("registerForm", new RegisterForm("", "", "", ""));
         }
         return "auth/register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("form") RegisterForm form, BindingResult bindingResult, Model model) {
+    public String registerUser(@Valid @ModelAttribute("registerForm") RegisterForm form,
+                               BindingResult bindingResult,
+                               Model model) {
+
         if (!form.password().equals(form.confirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "password.mismatch", "Hasła muszą być identyczne.");
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("form", form);
+            model.addAttribute("registerForm", form);
             return "auth/register";
         }
 
@@ -51,11 +54,11 @@ public class AuthController {
             userService.registerUser(form);
         } catch (DuplicateUserException ex) {
             bindingResult.reject("registration.error", ex.getMessage());
-            model.addAttribute("form", form);
+            model.addAttribute("registerForm", form);
             return "auth/register";
         }
 
-        model.addAttribute("form", new RegisterForm("", "", "", ""));
+        model.addAttribute("registerForm", new RegisterForm("", "", "", ""));
         model.addAttribute("successMessage", "Konto zostało utworzone. Zaloguj się, aby kontynuować.");
         return "auth/register";
     }
@@ -66,7 +69,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@RequestParam String username, @RequestParam String password, HttpServletRequest request, Model model) {
+    public String processLogin(@RequestParam String username,
+                               @RequestParam String password,
+                               HttpServletRequest request,
+                               Model model) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)

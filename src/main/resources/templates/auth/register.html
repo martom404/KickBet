@@ -15,12 +15,13 @@
 <div class="container auth-container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
+
             <h1 class="auth-heading text-center mb-3">Rejestracja</h1>
-            <p class="text-center text-muted mb-4">Zarejstruj się i obstawiaj mecze razem ze znajomymi!</p>
+            <p class="text-center mb-4">Zarejstruj się i obstawiaj mecze razem ze znajomymi!</p>
 
             <div class="card auth-card">
                 <div class="card-body p-4">
-                    <form th:action="@{/register}" method="post" th:object="${form}">
+                    <form th:action="@{/register}" method="post" th:object="${registerForm}">
 
                         <div class="alert alert-success" role="alert"
                              th:if="${successMessage != null}"
@@ -53,7 +54,7 @@
                                    th:classappend="${#fields.hasErrors('email')}? ' is-invalid'"
                                    id="email"
                                    th:field="*{email}"
-                                   placeholder="name@example.com"
+                                   placeholder="Twój e-mail"
                                    required>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Błąd</div>
                         </div>
@@ -66,6 +67,7 @@
                                    id="password"
                                    th:field="*{password}"
                                    minlength="8"
+                                   placeholder="Hasło"
                                    required>
                             <div class="form-text">Minimum 8 znaków – im bardziej zróżnicowane, tym lepiej.</div>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Błąd</div>
@@ -78,6 +80,7 @@
                                    th:classappend="${#fields.hasErrors('confirmPassword')}? ' is-invalid'"
                                    id="confirmPassword"
                                    th:field="*{confirmPassword}"
+                                   placeholder="Potwierdź hasło"
                                    required>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Błąd</div>
                         </div>

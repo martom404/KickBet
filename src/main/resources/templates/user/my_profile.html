@@ -19,7 +19,7 @@
     <div class="card mb-4">
         <div class="card-body">
 
-            <h3 class="card-title" th:text="${user.username}"></h3>
+            <strong><h3 class="card-title text-center" th:text="${user.username}"></h3></strong>
 
             <div class="mb-2">
                 <strong>Email:</strong> <span th:text="${user.email}"></span>
@@ -36,6 +36,15 @@
             <div class="mb-2">
                 <strong>Liczba zakładów:</strong>
                 <span th:text="${user.bets != null ? #lists.size(user.bets) : 0}"></span>
+            </div>
+
+            <div class="mb-2">
+                <strong>Liczba wygranych zakładów:</strong>
+                <span th:if="${user.bets != null}" th:text="${(user.points / 10)}"></span>
+            </div>
+
+            <div class="mb-2 mt-2 text-center">
+                <a th:href="@{/my-profile/change-password}" class="btn btn-warning">Zmień hasło</a>
             </div>
         </div>
     </div>
