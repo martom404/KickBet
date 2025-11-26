@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,37 @@
         <p class="lead mb-4">Obstawiaj wyniki meczów piłkarskich i wygrywaj punkty!</p>
     </div>
 
+    <div class="row mt-4 mb-4" sec:authorize = "isAnonymous()">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-info-circle"></i> Informacje: </h5>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <strong>Rejestracja:</strong> Na początek musisz zarejestrować się podając swój e-mail, na który w razie utraty hasła zostanie wysłany link do formularza.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Obstawianie meczów:</strong> Mecze możesz obstawiać w zakładce "Lista meczy". Każdy mecz można obstawić do momentu rozpoczęcia.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Punkty:</strong> Za poprawnie obstawiony zakład zyskujesz 10 punktów.
+                        </li>
+                        <li class="mb-3">
+                            <strong>Ranking:</strong> Ranking znajduje się w zakładce "Ranking".
+                        </li>
+                        <li class="mb-0 text-center">
+                            <strong>Powodzenia, niech wygra lepszy!</strong>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="text-center">
         <img th:src="@{/assets/img/kickbet.png}"
              alt="KickBet"
@@ -26,19 +57,32 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-6 mb-4">
+
+        <div th:class="${#authorization.expression('isAuthenticated()')} ? 'col-md-4 mb-4' : 'col-md-6 mb-4'">
             <div class="feature-card">
                 <h5 class="card-title">
                     <i class="bi bi-calendar-event"></i> Mecze
                 </h5>
-                <p class="card-text">Oglądaj wszystkie dostępne mecze i obstawiaj wyniki</p>
+                <p class="card-text"> Przejdź do listy meczów i obstawiaj kto wygra! </p>
                 <a th:href="@{/matches}" class="btn btn-primary w-100">
                     <i class="bi bi-arrow-right-circle"></i> Zobacz nadchodzące spotkania
                 </a>
             </div>
         </div>
 
-        <div class="col-md-6 mb-4">
+        <div sec:authorize="isAuthenticated()" class="col-md-4 mb-4">
+            <div class="feature-card">
+                <h5 class="card-title">
+                    <i class="bi bi-person-circle"></i> Mój profil
+                </h5>
+                <p class="card-text">Sprawdź twoje statystyki!</p>
+                <a th:href="@{/my-profile}" class="btn btn-info w-100">
+                    <i class="bi bi-arrow-right-circle"></i> Mój profil
+                </a>
+            </div>
+        </div>
+
+        <div th:class="${#authorization.expression('isAuthenticated()')} ? 'col-md-4 mb-4' : 'col-md-6 mb-4'">
             <div class="feature-card">
                 <h5 class="card-title">
                     <i class="bi bi-trophy"></i> Ranking
