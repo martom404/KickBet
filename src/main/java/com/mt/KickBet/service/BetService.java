@@ -46,20 +46,24 @@ public class BetService {
             throw new IllegalStateException("Nie możesz obstawić meczu, który jest niedostępny.");
         }
 
+        if(match.getFinalResult() != null) {
+            throw new IllegalStateException("Nie możesz obstawić meczu, który już się zakończył.");
+        }
+
         Optional<Bet> existingBet = betRepository.findByUserIdAndMatchId(userId, matchId);
 
+        Bet bet;
         if(existingBet.isPresent()) {
-            Bet bet = existingBet.get();
+            bet = existingBet.get();
             bet.setPick(request.pick());
-            betRepository.save(bet);
         } else {
-            Bet bet = Bet.builder()
-                     .user(user)
-                     .match(match)
-                     .pick(request.pick())
-                     .build();
-            betRepository.save(bet);
+            bet = Bet.builder()
+                    .user(user)
+                    .match(match)
+                    .pick(request.pick())
+                    .build();
         }
+        betRepository.save(bet);
     }
 
     @Transactional
