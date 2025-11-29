@@ -1,7 +1,9 @@
 package com.mt.KickBet.controller;
 
 import com.mt.KickBet.exception.DuplicateUserException;
+import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
+import com.mt.KickBet.model.entity.User;
 import com.mt.KickBet.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,12 +23,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -73,6 +78,14 @@ public class AuthController {
                                @RequestParam String password,
                                HttpServletRequest request,
                                Model model) {
+
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isPresent() && userOptional.get().isLocked()) {
+            model.addAttribute("error", "Twoje konto zostało zablokowane.");
+            return "auth/login";
+        }
+
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)

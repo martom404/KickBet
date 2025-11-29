@@ -28,7 +28,11 @@ public class UserProfileController {
         User currentUser = SecurityTools.getUser();
         if (currentUser != null) {
             userService.getUserByID(currentUser.getId())
-                    .ifPresent(user -> model.addAttribute("user", user));
+                    .ifPresent(user -> {
+                        model.addAttribute("user", user);
+                        int rankPosition = userService.getUserRankPosition(user.getId());
+                        model.addAttribute("rankPosition", rankPosition);
+                    });
         }
         return "user/my_profile";
     }
