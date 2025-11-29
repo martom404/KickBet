@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administratora - KickBet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="admin-page">
+<div th:replace="fragments/header :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="bi bi-gear-fill"></i> Panel administratora</h1>
+            <h2>Zarądzanie użytkownikami</h2>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                <tr>
+                    <th scope="col"> Username </th>
+                    <th scope="col">E-mail </th>
+                    <th scope="col"> Data utworzenia konta </th>
+                    <th scope="col"> Punkty </th>
+                    <th scope="col"> Zablokowany </th>
+                    <th scope="col"> Aktywny </th>
+                    <th scope="col" class="text-end"> Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users.content}">
+                    <td><strong th:text="${user.username}"></strong></td>
+
+                    <td><strong th:text="${user.email}"></strong></td>
+
+                    <td> <span th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy HH:mm')}">-</span> </td>
+
+                    <td> <strong th:text="${user.points}"></strong></td>
+
+                    <td>
+                        <span th:if="${user.locked == false}" class="badge bg-success"> NIE </span>
+                        <span th:if="${user.locked}" class="badge bg-danger"> TAK </span>
+                    </td>
+
+                    <td>
+                        <span th:if="${user.active == false}" class="badge bg-danger"> NIE </span>
+                        <span th:if="${user.active}" class="badge bg-success"> TAK </span>
+                    </td>
+
+                    <td>
+                        <div class="btn-group" role="group">
+                            <form th:action="@{/admin/users/{id}/block(id=${user.id})}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-warning"> Zablokuj konto </button>
+                            </form>
+
+                            <a th:href="@{/admin/users/{id}/edit(id=${user.id})}" class="btn btn-sm btn-primary d-inline" > Edytuj </a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${users.totalElements == 0}">
+                    <td colspan="7" class="text-center text-muted py-5">
+                        <p class="mt-3 mb-0">Brak użytkowników.</p>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:if="${users.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-3">
+
+        <div>
+            <a th:if="${!users.first}" th:href="@{/admin/users(page=${users.number - 1}, size=${users.size})}"
+               class="btn btn-outline-primary">
+                <i class="bi bi-chevron-left"></i> Poprzednia
+            </a>
+            <span th:if="${users.first}" class="btn btn-outline-secondary disabled">
+                <i class="bi bi-chevron-left"></i> Poprzednia
+            </span>
+        </div>
+
+        <div class="text-muted">
+            Strona <strong th:text="${users.number + 1}">1</strong> z <strong th:text="${users.totalPages}">1</strong>
+        </div>
+
+        <div>
+            <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${users.size})}"
+               class="btn btn-outline-primary">
+                Następna <i class="bi bi-chevron-right"></i>
+            </a>
+            <span th:if="${users.last}" class="btn btn-outline-secondary disabled">
+                Następna <i class="bi bi-chevron-right"></i>
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
