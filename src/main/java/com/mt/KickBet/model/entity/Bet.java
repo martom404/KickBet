@@ -44,7 +44,7 @@ public class Bet {
 
     @Column(nullable = false)
     @Builder.Default
-    private Integer pointsAwarded = 0;
+    private Double pointsAwarded = 0.0;
 
     @Column(name = "created_at", updatable = false, nullable = false)
     @CreationTimestamp
@@ -53,4 +53,7 @@ public class Bet {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(name = "odds_at_bet_time", nullable = false)
+    private Double oddsAtBetTime;
 }

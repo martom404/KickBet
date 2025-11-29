@@ -1,9 +1,6 @@
 package com.mt.KickBet.model.dto.match;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -26,7 +23,19 @@ public record UpdateMatchRequest(
         @NotNull(message = "Data rozpoczęcia meczu jest wymagana")
         @Future(message = "Mecz nie może być w przeszłości")
         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-        LocalDateTime startTime
+        LocalDateTime startTime,
+
+        @NotNull(message="Kurs na gospodarzy jest wymagany")
+        @DecimalMin(value="1.0", message = "Kurs musi być >= 1.0")
+        Double oddsHome,
+
+        @NotNull(message="Kurs na remis jest wymagany")
+        @DecimalMin(value="1.0", message = "Kurs musi być >= 1.0")
+        Double oddsDraw,
+
+        @NotNull(message="Kurs na gości jest wymagany")
+        @DecimalMin(value="1.0", message = "Kurs musi być >= 1.0")
+        Double oddsAway
 ) {
 }
 

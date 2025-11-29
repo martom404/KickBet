@@ -30,6 +30,15 @@ public class Match {
     @Column(name = "external_id", unique = true)
     private Long externalId;
 
+    @Column(name = "odds_home", nullable = false)
+    private Double oddsHome;
+
+    @Column(name="odds_draw", nullable = false)
+    private Double oddsDraw;
+
+    @Column(name="odds_away", nullable = false)
+    private Double oddsAway;
+
     @Column(name = "home_team", nullable = false, length = 80)
     private String homeTeam;
 

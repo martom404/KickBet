@@ -3,6 +3,7 @@ package com.mt.KickBet.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,7 +44,7 @@ public class User implements UserDetails {
     private String passwordHash;
 
     @Column(name = "points", nullable = false)
-    private int points = 0;
+    private Double points = 0.0;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
