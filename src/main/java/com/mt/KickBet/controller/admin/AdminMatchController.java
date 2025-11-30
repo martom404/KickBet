@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.admin;
 
 import com.mt.KickBet.model.dto.match.CreateMatchRequest;
 import com.mt.KickBet.model.dto.match.UpdateMatchRequest;
@@ -26,7 +26,9 @@ public class AdminMatchController {
     }
 
     @GetMapping
-    public String listMatches(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "25") int size,Model model) {
+    public String listMatches(@RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "25") int size,
+                              Model model) {
         Page<Match> matchesPage = matchService.getAllMatchesForAdmin(page, size);
         model.addAttribute("matches", matchesPage);
         return "admin/match_list";
@@ -34,12 +36,13 @@ public class AdminMatchController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("form", new CreateMatchRequest("", "", LocalDateTime.now()));
+        model.addAttribute("form", new CreateMatchRequest("", "", LocalDateTime.now(), 1.0, 1.0, 1.0));
         return "admin/match_createform";
     }
 
     @PostMapping
-    public String createMatch(@Valid @ModelAttribute("form") CreateMatchRequest form, BindingResult bindingResult) {
+    public String createMatch(@Valid @ModelAttribute("form") CreateMatchRequest form,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/match_createform";
         }
@@ -48,23 +51,28 @@ public class AdminMatchController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable Long id,
+                               Model model) {
         return matchService.getMatchById(id)
                 .map(match -> {
-                    UpdateMatchRequest form = new UpdateMatchRequest(
+                    model.addAttribute("form", new UpdateMatchRequest(
                             match.getHomeTeam(),
                             match.getAwayTeam(),
-                            match.getStartTime()
-                    );
-                    model.addAttribute("form", form);
+                            match.getStartTime(),
+                            match.getOddsHome(),
+                            match.getOddsDraw(),
+                            match.getOddsAway()
+                    ));
                     model.addAttribute("matchId", id);
                     return "admin/match_editform";
-                })
-                .orElse("redirect:/admin/matches");
+                }).orElse("redirect:/admin/matches");
     }
 
     @PostMapping("/{id}/edit")
-    public String updateMatch(@PathVariable Long id, @Valid @ModelAttribute("form") UpdateMatchRequest form, BindingResult bindingResult, Model model) {
+    public String updateMatch(@PathVariable Long id,
+                              @Valid @ModelAttribute("form") UpdateMatchRequest form,
+                              BindingResult bindingResult,
+                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("matchId", id);
             return "admin/match_editform";
@@ -74,7 +82,9 @@ public class AdminMatchController {
     }
 
     @PostMapping("/{id}/result")
-    public String setResult(@PathVariable Long id, @RequestParam("result") String result, RedirectAttributes redirectAttributes) {
+    public String setResult(@PathVariable Long id,
+                            @RequestParam("result") String result,
+                            RedirectAttributes redirectAttributes) {
         try {
             Result enumResult = Result.valueOf(result);
             matchService.setFinalResult(id, enumResult);

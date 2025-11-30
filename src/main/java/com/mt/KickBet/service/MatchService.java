@@ -58,6 +58,9 @@ public class MatchService {
                 .homeTeam(request.homeTeam())
                 .awayTeam(request.awayTeam())
                 .startTime(request.startTime())
+                .oddsHome(request.oddsHome())
+                .oddsDraw(request.oddsDraw())
+                .oddsAway(request.oddsAway())
                 .build();
         matchRepository.save(match);
     }
@@ -68,6 +71,9 @@ public class MatchService {
             match.setHomeTeam(request.homeTeam());
             match.setAwayTeam(request.awayTeam());
             match.setStartTime(request.startTime());
+            match.setOddsHome(request.oddsHome());
+            match.setOddsDraw(request.oddsDraw());
+            match.setOddsAway(request.oddsAway());
             matchRepository.save(match);
         });
     }

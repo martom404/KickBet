@@ -53,6 +53,42 @@
                                    required>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Błąd</div>
                         </div>
+                        <div class="mb-3">
+                            <label for="oddsHome" class="form-label">Kurs na gospodarzy</label>
+                            <input type="number"
+                                   step="0.01"
+                                   min="1.0"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('oddsHome')}? ' is-invalid'"
+                                   id="oddsHome"
+                                   th:field="*{oddsHome}"
+                                   required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('oddsHome')}" th:errors="*{oddsHome}">Błąd</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="oddsDraw" class="form-label">Kurs na remis</label>
+                            <input type="number"
+                                   step="0.01"
+                                   min="1.0"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('oddsDraw')}? ' is-invalid'"
+                                   id="oddsDraw"
+                                   th:field="*{oddsDraw}"
+                                   required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('oddsDraw')}" th:errors="*{oddsDraw}">Błąd</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="oddsAway" class="form-label">Kurs na gości</label>
+                            <input type="number"
+                                   step="0.01"
+                                   min="1.0"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('oddsAway')}? ' is-invalid'"
+                                   id="oddsAway"
+                                   th:field="*{oddsAway}"
+                                   required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('oddsAway')}" th:errors="*{oddsAway}">Błąd</div>
+                        </div>
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
                             <a th:href="@{/admin/matches}" class="btn btn-outline-secondary">Anuluj</a>

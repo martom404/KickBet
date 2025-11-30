@@ -93,6 +93,9 @@ public class FootballDataService {
                                 .awayTeam(apiMatch.getAwayTeamName())
                                 .startTime(startTime)
                                 .finalResult(null)
+                                .oddsHome(apiMatch.getHomeWinOdds())
+                                .oddsDraw(apiMatch.getDrawOdds())
+                                .oddsAway(apiMatch.getAwayWinOdds())
                                 .build();
 
                         matchRepository.save(match);

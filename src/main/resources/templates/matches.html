@@ -21,11 +21,9 @@
 
     <div th:if="${success}" role="alert" class="alert alert-success">
          <span th:text="${success}"></span>
-        <button type="button" class="btn-close"></button>
     </div>
     <div th:if="${error}" role="alert" class="alert alert-danger">
         <span th:text="${error}"></span>
-        <button type="button" class="btn-close"></button>
     </div>
 
     <div class="content-container">
@@ -38,6 +36,7 @@
                     <th scope="col"> Data rozpoczęcia </th>
                     <th scope="col" sec:authorize="isAuthenticated()" > Twój wybór </th>
                     <th scope="col" sec:authorize="isAuthenticated()" > Obstaw </th>
+                    <th scope="col"> Kursy </th>
                 </tr>
                 </thead>
 
@@ -67,10 +66,16 @@
                             <button type = "submit" class="btn btn-danger" name="pick" value="AWAY"> 2 </button>
                         </form>
                     </td>
+                    <td>
+                        1: <strong th:text="${match.oddsHome}"></strong><br>
+                        X: <strong th:text="${match.oddsDraw}"></strong><br>
+                        2: <strong th:text="${match.oddsAway}"></strong><br>
+                    </td>
                 </tr>
 
+
                 <tr th:if="${matches.isEmpty()}">
-                    <td th:colspan="${betsByMatchId != null ? 5 : 3}" class="text-center text-muted py-5">
+                    <td th:colspan="${betsByMatchId != null ? 6 : 3}" class="text-center text-muted py-5">
                         <i class="bi bi-inbox" ></i>
                         <p class="mt-3 mb-0">Brak meczy.</p>
                     </td>

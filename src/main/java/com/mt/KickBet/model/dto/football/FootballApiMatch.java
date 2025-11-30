@@ -24,10 +24,26 @@ public class FootballApiMatch {
 
     private String status;
 
+    @JsonProperty("odds")
+    private Odds odds;
+
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Team {
         private String name;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Odds {
+        @JsonProperty("homeWin")
+        private Double homeWin;
+
+        @JsonProperty("draw")
+        private Double draw;
+
+        @JsonProperty("awayWin")
+        private Double awayWin;
     }
 
     public LocalDateTime getStartTime() {
@@ -48,5 +64,17 @@ public class FootballApiMatch {
 
     public String getAwayTeamName() {
         return awayTeam != null ? awayTeam.getName() : null;
+    }
+
+    public Double getHomeWinOdds() {
+        return (odds != null && odds.getHomeWin() != null) ? odds.getHomeWin() : 1.0;
+    }
+
+    public Double getDrawOdds() {
+        return (odds != null && odds.getDraw() != null) ? odds.getDraw() : 1.0;
+    }
+
+    public Double getAwayWinOdds() {
+        return (odds != null && odds.getAwayWin() != null) ? odds.getAwayWin() : 1.0;
     }
 }
