@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.user;
 
 import com.mt.KickBet.model.entity.User;
 import com.mt.KickBet.security.SecurityTools;

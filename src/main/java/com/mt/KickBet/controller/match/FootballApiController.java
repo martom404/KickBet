@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.match;
 
 import com.mt.KickBet.service.FootballDataService;
 import lombok.RequiredArgsConstructor;

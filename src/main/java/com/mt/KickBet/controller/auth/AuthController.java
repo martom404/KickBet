@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.auth;
 
 import com.mt.KickBet.exception.DuplicateUserException;
 import com.mt.KickBet.model.dao.UserRepository;

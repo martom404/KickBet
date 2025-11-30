@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.user;
 
 import com.mt.KickBet.model.dto.auth.ChangePasswordForm;
 import com.mt.KickBet.model.entity.User;
@@ -30,7 +30,7 @@ public class UserProfileController {
             userService.getUserByID(currentUser.getId())
                     .ifPresent(user -> {
                         model.addAttribute("user", user);
-                        int rankPosition = userService.getUserRankPosition(user.getId());
+                        int rankPosition = userService.calculateRankPosition(user.getPoints());
                         model.addAttribute("rankPosition", rankPosition);
                     });
         }

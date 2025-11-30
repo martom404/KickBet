@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.match;
 
 import com.mt.KickBet.model.dto.bet.CreateBetRequest;
 import com.mt.KickBet.model.entity.Bet;

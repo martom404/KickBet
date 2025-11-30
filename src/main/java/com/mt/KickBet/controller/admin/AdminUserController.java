@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller;
+package com.mt.KickBet.controller.admin;
 
 
 import com.mt.KickBet.model.dto.user.UpdateUserRequest;

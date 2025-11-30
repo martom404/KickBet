@@ -33,12 +33,6 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public int getUserRankPosition(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoUserException("Brak użytkownika w systemie!"));
-        return calculateRankPosition(user.getPoints());
-    }
-
     public int calculateRankPosition(Double points) {
         long usersWithMorePoints = userRepository.countUsersWithMorePoints(points);
         return (int) (usersWithMorePoints + 1);

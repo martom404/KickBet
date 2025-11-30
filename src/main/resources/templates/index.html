@@ -9,36 +9,44 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="index-page">
+
+<body>
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container">
 
     <div class="hero-section text-center">
-        <h1 class="display-4 mb-4">Witaj w KickBet! <i class="bi bi-trophy-fill text-warning"></i></h1>
-        <p class="lead mb-4">Obstawiaj wyniki meczów piłkarskich i wygrywaj punkty!</p>
+        <h1 class="display-2 mb-3"> Witaj w KickBet! </h1>
+        <p class="mb-3"> Obstawiaj wyniki meczów piłkarskich! </p>
     </div>
 
-    <div class="row mt-4 mb-4" sec:authorize = "isAnonymous()">
+    <div class="text-center">
+        <img th:src="@{/assets/img/kickbet.png}"
+             alt="KickBet"
+             height="400">
+    </div>
+
+    <div class="mt-4 mb-4" sec:authorize = "isAnonymous()">
         <div class="col-md-8 offset-md-2">
+
             <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="bi bi-info-circle"></i> Informacje: </h5>
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-1"><i class="bi bi-info-circle"></i> Informacje: </h5>
                 </div>
 
                 <div class="card-body">
                     <ul class="list-unstyled">
                         <li class="mb-3">
-                            <strong>Rejestracja:</strong> Na początek musisz zarejestrować się podając swój e-mail, na który w razie utraty hasła zostanie wysłany link do formularza.
+                            <strong>Rejestracja:</strong> Na początek musisz zarejestrować się w naszej aplikacji. Aby to zrobić naciśnij przejdź do zakładki "Rejestracja".
                         </li>
                         <li class="mb-3">
-                            <strong>Obstawianie meczów:</strong> Mecze możesz obstawiać w zakładce "Lista meczy". Każdy mecz można obstawić do momentu rozpoczęcia.
+                            <strong>Obstawianie meczów:</strong> Mecze możesz obstawiać w zakładce "Lista meczy". Każdy mecz można obstawić do momentu rozpoczęcia się meczu, po rozpoczęciu mecz zostanie ukryty. Możesz znaleźć swój typ w zakładce "Moje typy".
                         </li>
                         <li class="mb-3">
-                            <strong>Punkty:</strong> Za poprawnie obstawiony zakład zyskujesz 10 punktów.
+                            <strong>Punkty:</strong> Za poprawnie obstawiony zakład otrzymujesz liczbę punktów obliczoną na podstawie kursu.
                         </li>
                         <li class="mb-3">
-                            <strong>Ranking:</strong> Ranking znajduje się w zakładce "Ranking".
+                            <strong>Ranking:</strong> W zakładce "Ranking" możesz sprawdzić kto aktualnie jest najlepszym typerem.
                         </li>
                         <li class="mb-0 text-center">
                             <strong>Powodzenia, niech wygra lepszy!</strong>
@@ -50,14 +58,7 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <img th:src="@{/assets/img/kickbet.png}"
-             alt="KickBet"
-             height="400">
-    </div>
-
     <div class="row mt-4">
-
         <div th:class="${#authorization.expression('isAuthenticated()')} ? 'col-md-4 mb-4' : 'col-md-6 mb-4'">
             <div class="feature-card">
                 <h5 class="card-title">

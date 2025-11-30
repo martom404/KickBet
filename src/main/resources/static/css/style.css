@@ -1,16 +1,30 @@
 /* Global Styles */
 body {
-    background: linear-gradient(180deg, #e4ebff 0%, #ffffff 65%, #f8fbff 100%);
+    background: linear-gradient(180deg, #0a3aea 0%, #ffffff 65%, #2b67cd 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Navbar */
 .custom-navbar {
     background: #0D1733;
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(13, 23, 51, 0.25);
+}
+
+.custom-navbar .btn {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.custom-navbar .btn:hover,
+.custom-navbar .btn:focus {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-navbar .dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .custom-navbar .navbar-brand,
@@ -24,63 +38,46 @@ body {
     color: #cbd5ff;
 }
 
-.custom-navbar .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-/* Footer */
 .site-footer {
     background: #0D1733;
     color: #ffffff;
     box-shadow: 0 -2px 12px rgba(13, 23, 51, 0.2);
     margin-top: auto;
+
 }
 
-.site-footer p {
-    color: inherit;
+/* Index Page */
+
+.hero-section {
+    background: whitesmoke;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
-/* Page Backgrounds */
-body.index-page {
-    background: linear-gradient(180deg, #dde6ff 0%, #ffffff 70%, #f4f7ff 100%);
+.hero-section h1 {
+    font-weight: 700;
 }
 
-body.ranking-page {
-    background: white;
-}
-
-body.my-bets-page,
-body.admin-page {
-    background: linear-gradient(180deg, #dfe7ff 0%, #ffffff 70%, #f5f9ff 100%);
-}
-
-body.auth-page {
-    background: linear-gradient(180deg, #d9e2ff 0%, #ffffff 65%, #f2f6ff 100%);
-    display: flex;
-    flex-direction: column;
-}
-
-body.auth-page .site-footer {
-    margin-top: auto;
-}
-
-/* Cards */
-.card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+.hero-section p {
+    color: #4a5568;
+    font-size: 1.5rem;
 }
 
 .feature-card {
+    background: whitesmoke;
+    border-radius: 16px;
     padding: 2rem;
     height: 100%;
     transition: all 0.3s ease;
     border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .feature-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 .feature-card .card-title {
@@ -96,7 +93,6 @@ body.auth-page .site-footer {
 }
 
 .feature-card .card-text {
-    color: #4a5568;
     margin-bottom: 1.5rem;
 }
 
@@ -111,77 +107,20 @@ body.auth-page .site-footer {
     transform: scale(1.05);
 }
 
-.auth-card {
-    border: 1px solid #d7dcf5;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-/* Hero Section */
-.hero-section {
+/* Table Styles */
+.table-container,
+.bets-container {
     background: white;
-    border-radius: 16px;
-    padding: 3rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-}
-
-.hero-section h1 {
-    color: #2d3748;
-    font-weight: 700;
-}
-
-.hero-section p {
-    color: #4a5568;
-    font-size: 1.1rem;
-}
-
-/* Containers */
-.content-container {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     overflow: hidden;
 }
 
-.auth-container {
-    flex: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+.bets-container {
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-/* Page Header */
-.page-header {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-
-.page-header h1 {
-    margin: 0;
-    color: #2d3748;
-    font-weight: 700;
-}
-
-.page-header.gradient {
-    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    color: white;
-    padding: 2rem;
-}
-
-.page-header.gradient h1 {
-    color: white;
-    text-align: center;
-}
-
-.auth-heading {
-    font-weight: 600;
-    color: #1f2937;
-}
-
-/* Tables */
 .table thead th {
     background: cornflowerblue;
     color: white;
@@ -209,13 +148,66 @@ body.auth-page .site-footer {
     vertical-align: middle;
 }
 
-/* Badges */
+.ranking-container .table tbody td {
+    padding: 1.25rem 1rem;
+}
+
 .badge {
     padding: 0.5em 0.75em;
     font-weight: 500;
     font-size: 0.85rem;
 }
 
+.btn-group .btn {
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+/* Page Header */
+.page-header {
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+
+.page-header.gradient {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%) !important;
+    color: white !important;
+    padding: 2rem;
+    text-align: center;
+}
+
+.page-header.admin {
+    background: darkseagreen;
+    color: white !important;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Auth Page */
+body.auth-page {
+    background: linear-gradient(180deg, #0a3aea 0%, #ffffff 65%, #2b67cd 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container {
+    flex: 1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.auth-heading {
+    font-weight: 700;
+    color: #121b20;
+}
+
+.auth-page .site-footer {
+    margin-top: auto;
+}
+
+/* Ranking */
 .rank-badge {
     width: 45px;
     height: 45px;
@@ -224,53 +216,35 @@ body.auth-page .site-footer {
     justify-content: center;
     border-radius: 50%;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .rank-1 {
     background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 }
 
 .rank-2 {
     background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(192, 192, 192, 0.4);
 }
 
 .rank-3 {
     background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(205, 127, 50, 0.4);
 }
 
 .rank-other {
-    background: #e9ecef;
-    color: #495057;
+    background: #7da8e2;
+    color: #090404;
 }
 
 .points-display {
-    font-size: 1.25rem;
     font-weight: 700;
     color: #28a745;
 }
 
 .username-display {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #2d3748;
-}
-
-/* Buttons */
-.btn-group .btn {
-    border-radius: 6px;
-    margin: 0 2px;
-}
-
-/* Alerts */
-.alert {
-    border-radius: 12px;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    font-weight: 700;
+    color: rgb(9, 4, 4);
 }

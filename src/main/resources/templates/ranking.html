@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
-<body class="ranking-page">
+<body>
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container mt-4">
@@ -72,10 +72,10 @@
 
         <div>
             <a th:if="${!users.first}" th:href="@{/ranking(page=${users.number - 1}, size=${users.size})}"
-            class="btn btn-outline-primary">
+            class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
-            <span th:if="${users.first}" class="btn btn-outline-secondary disabled">
+            <span th:if="${users.first}" class="btn btn-secondary disabled">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </span>
         </div>
@@ -86,10 +86,10 @@
 
         <div>
             <a th:if="${!users.last}" th:href="@{/ranking(page=${users.number + 1}, size=${users.size})}"
-            class="btn btn-outline-primary">
+            class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>
-            <span th:if="${users.last}" class="btn btn-outline-secondary disabled">
+            <span th:if="${users.last}" class="btn btn-secondary disabled">
                 Następna <i class="bi bi-chevron-right"></i>
             </span>
         </div>
