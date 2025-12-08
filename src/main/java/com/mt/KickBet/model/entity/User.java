@@ -44,10 +44,12 @@ public class User implements UserDetails {
     private String passwordHash;
 
     @Column(name = "points", nullable = false)
+    @Builder.Default
     private Double points = 0.0;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private Role role = Role.USER;
 
     @Column(name = "created_at", updatable = false)
@@ -60,12 +62,15 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @Builder.Default
     private List<Bet> bets = new ArrayList<>();
 
     @Column(name = "active", nullable = false)
+    @Builder.Default
     private boolean active = true;
 
     @Column(name = "locked", nullable = false)
+    @Builder.Default
     private boolean locked = false;
 
     @Override
