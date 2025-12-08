@@ -25,7 +25,7 @@ import java.util.List;
                 @UniqueConstraint(name = "uk_users_email", columnNames = "email")
         }
 )
-@Data
+@Data @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class User implements UserDetails {
 
