@@ -13,7 +13,7 @@
 <body class="my-bets-page">
 <div th:replace="fragments/header :: navbar"></div>
 
-<div class="container mt-4">
+<div class="container mt-4 main-container">
 
     <div class="page-header gradient">
         <h1><i class="bi bi-clock-history"></i> Nadchodzące spotkania</h1>
@@ -88,24 +88,24 @@
     <div th:if="${matches.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-3">
         <div>
             <a th:if="${!matches.first}" th:href="@{/matches(page=${matches.number - 1}, size=${matches.size})}"
-               class="btn btn-outline-primary">
+               class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
-            <span th:if="${matches.first}" class="btn btn-outline-secondary disabled">
+            <span th:if="${matches.first}" class="btn btn-secondary disabled">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </span>
         </div>
 
-        <div class="text-muted">
+        <div>
             Strona <strong th:text="${matches.number + 1}"></strong> z <strong th:text="${matches.totalPages}"></strong>
         </div>
 
         <div>
             <a th:if="${!matches.last}" th:href="@{/matches(page=${matches.number + 1}, size=${matches.size})}"
-               class="btn btn-outline-primary">
+               class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>
-            <span th:if="${matches.last}" class="btn btn-outline-secondary disabled">
+            <span th:if="${matches.last}" class="btn btn-secondary disabled">
                 Następna <i class="bi bi-chevron-right"></i>
             </span>
         </div>

@@ -11,8 +11,8 @@
 <body class="my-bets-page">
 <div th:replace="fragments/header :: navbar"></div>
 
-<div class="container mt-4">
-    <div class="page-header">
+<div class="container mt-4 main-container">
+    <div class="page-header gradient">
         <h1><i class="bi bi-person-fill"></i> Mój profil</h1>
     </div>
 
@@ -42,6 +42,11 @@
             <div class="mb-2">
                 <strong>Liczba wygranych zakładów:</strong>
                 <span th:if="${user.bets != null}" th:text="${(user.points / 10)}"></span>
+            </div>
+
+            <div class="mb-2">
+                <strong>Moja skuteczność:</strong>
+                <span th:text="${winRate != null ? winRate : '0'}"></span>%
             </div>
 
             <div class="mb-2 mt-2 text-center">

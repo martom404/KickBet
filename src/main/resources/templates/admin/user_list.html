@@ -12,11 +12,15 @@
 <body class="admin-page">
 <div th:replace="fragments/header :: navbar"></div>
 
-<div class="container mt-4">
+<div class="container mt-4 main-container">
     <div class="page-header admin">
         <div class="d-flex justify-content-between align-items-center">
             <h1><i class="bi bi-gear-fill"></i> Panel administratora</h1>
-            <h2>Zarądzanie użytkownikami</h2>
+            <div class="btn-group">
+
+                <a th:href="@{/admin/matches}" class="btn btn-primary btn-lg"> Przejdź do meczy </a>
+
+            </div>
         </div>
     </div>
 
@@ -80,24 +84,24 @@
 
         <div>
             <a th:if="${!users.first}" th:href="@{/admin/users(page=${users.number - 1}, size=${users.size})}"
-               class="btn btn-outline-primary">
+               class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
-            <span th:if="${users.first}" class="btn btn-outline-secondary disabled">
+            <span th:if="${users.first}" class="btn btn-secondary disabled">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </span>
         </div>
 
-        <div class="text-muted">
+        <div>
             Strona <strong th:text="${users.number + 1}">1</strong> z <strong th:text="${users.totalPages}">1</strong>
         </div>
 
         <div>
             <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${users.size})}"
-               class="btn btn-outline-primary">
+               class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>
-            <span th:if="${users.last}" class="btn btn-outline-secondary disabled">
+            <span th:if="${users.last}" class="btn btn-secondary disabled">
                 Następna <i class="bi bi-chevron-right"></i>
             </span>
         </div>

@@ -13,7 +13,7 @@
 <body>
 <div th:replace="fragments/header :: navbar"></div>
 
-<div class="container mt-4">
+<div class="container mt-4 main-container">
 
     <div class="page-header gradient">
         <h1><i class="bi bi-trophy-fill"></i> Ranking użytkowników</h1>
@@ -80,7 +80,7 @@
             </span>
         </div>
 
-        <div class="text-muted">
+        <div>
             Strona <strong th:text="${users.number + 1}"></strong> z <strong th:text="${users.totalPages}"></strong>
         </div>
 

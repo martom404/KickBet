@@ -6,6 +6,12 @@ body {
     flex-direction: column;
 }
 
+.main-container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    flex: 1;
+}
+
 .custom-navbar {
     background: #0D1733;
     color: #ffffff;
@@ -121,15 +127,16 @@ body {
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
+.table-responsive {
+ border-radius: 16px;
+}
+
 .table thead th {
-    background: cornflowerblue;
-    color: white;
+    background: #222d2d;
+    color: #ffffff;
     font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
     letter-spacing: 0.5px;
     padding: 1rem;
-    border: none;
 }
 
 .table tbody tr {
@@ -138,13 +145,12 @@ body {
 }
 
 .table tbody tr:hover {
-    background-color: #f8f9ff;
+    background-color: #b4b8ff;
     transform: translateX(2px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .table tbody td {
-    padding: 1rem;
     vertical-align: middle;
 }
 
@@ -160,7 +166,7 @@ body {
 
 .btn-group .btn {
     border-radius: 6px;
-    margin: 0 2px;
+    margin: 15px;
 }
 
 /* Page Header */
@@ -191,13 +197,6 @@ body.auth-page {
     display: flex;
     flex-direction: column;
 }
-
-.auth-container {
-    flex: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-}
-
 .auth-heading {
     font-weight: 700;
     color: #121b20;
