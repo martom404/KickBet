@@ -33,6 +33,12 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
+    public Page<User> getAllUsersForAdmin(int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return userRepository.findAll(pageable);
+    }
+
     public int calculateRankPosition(Double points) {
         long usersWithMorePoints = userRepository.countUsersWithMorePoints(points);
         return (int) (usersWithMorePoints + 1);
@@ -45,16 +51,18 @@ public class UserService {
     @Transactional
     public void registerUser(RegisterForm form) {
         if (userRepository.existsByEmail(form.email()))
-            throw new DuplicateUserException("Taki email już istnieje w bazie danych.");
+            throw new DuplicateUserException("Użytkownik z takim emailem istnieje już w naszej bazie danych.");
 
         if (userRepository.existsByUsername(form.username()))
-            throw new DuplicateUserException("Użytkownik o takiej nazwie już istnieje w bazie danych.");
+            throw new DuplicateUserException("Użytkownik z taką nazwą istnieje już w naszej bazie danych.");
 
-        User user = new User();
-        user.setEmail(form.email());
-        user.setUsername(form.username());
-        user.setPasswordHash(passwordEncoder.encode(form.password()));
-        userRepository.save(user);
+        userRepository.save(
+                User.builder()
+                        .username(form.username())
+                        .email(form.email())
+                        .passwordHash(passwordEncoder.encode(form.password()))
+                        .build()
+        );
     }
 
     @Transactional
@@ -82,11 +90,26 @@ public class UserService {
 
     @Transactional
     public void updateUser (Long id, UpdateUserRequest dto) {
-        userRepository.findById(id).ifPresent(user -> {
-            user.setUsername(dto.username());
-            user.setEmail(dto.email());
-            user.setPoints(dto.points());
-            userRepository.save(user);
-        });
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoUserException("Użytkownik nie został znaleziony."));
+
+        if (!user.getUsername().equals(dto.username())) {
+            Optional<User> userWithSameUsername = userRepository.findByUsername(dto.username());
+            if (userWithSameUsername.isPresent()) {
+                throw new DuplicateUserException("Użytkownik z taką nazwą istnieje już w naszej bazie danych.");
+            }
+        }
+
+        if (!user.getEmail().equals(dto.email())) {
+            Optional<User> userWithSameEmail = userRepository.findByEmail(dto.email());
+            if (userWithSameEmail.isPresent()) {
+                throw new DuplicateUserException("Użytkownik z takim emailem istnieje już w naszej bazie danych.");
+            }
+        }
+
+        user.setUsername(dto.username());
+        user.setEmail(dto.email());
+        user.setPoints(dto.points());
+        userRepository.save(user);
     }
 }
