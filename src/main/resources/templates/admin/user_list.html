@@ -34,7 +34,6 @@
                     <th scope="col"> Data utworzenia konta </th>
                     <th scope="col"> Punkty </th>
                     <th scope="col"> Zablokowany </th>
-                    <th scope="col"> Aktywny </th>
                     <th scope="col" class="text-end"> Akcje</th>
                 </tr>
                 </thead>
@@ -51,11 +50,6 @@
                     <td>
                         <span th:if="${user.locked == false}" class="badge bg-success"> NIE </span>
                         <span th:if="${user.locked}" class="badge bg-danger"> TAK </span>
-                    </td>
-
-                    <td>
-                        <span th:if="${user.active == false}" class="badge bg-danger"> NIE </span>
-                        <span th:if="${user.active}" class="badge bg-success"> TAK </span>
                     </td>
 
                     <td>

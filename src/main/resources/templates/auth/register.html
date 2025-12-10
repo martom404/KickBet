@@ -26,13 +26,12 @@
                         <div class="alert alert-success" role="alert"
                              th:if="${successMessage != null}"
                              th:text="${successMessage}">
-                            Poprawnie zarejestrowano użytkownika w systemie.
                         </div>
 
                         <div class="alert alert-danger" role="alert"
                              th:if="${#fields.hasGlobalErrors()}"
                              th:each="err : ${#fields.globalErrors()}"
-                             th:text="${err}">Wystąpił błąd.
+                             th:text="${err}">.
                         </div>
 
                         <div class="mb-3">

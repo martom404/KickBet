@@ -1,14 +1,13 @@
 package com.mt.KickBet.controller.auth;
 
 import com.mt.KickBet.exception.DuplicateUserException;
-import com.mt.KickBet.model.dao.UserRepository;
+import com.mt.KickBet.exception.UserIsLockedException;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
-import com.mt.KickBet.model.entity.User;
 import com.mt.KickBet.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,21 +22,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
-
 @Controller
-@RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+
+    public AuthController(UserService userService, AuthenticationManager authenticationManager) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        if (!model.containsAttribute("registerForm")) {
-            model.addAttribute("registerForm", new RegisterForm("", "", "", ""));
-        }
+        model.addAttribute("registerForm", new RegisterForm("", "", "", ""));
         return "auth/register";
     }
 
@@ -79,14 +77,9 @@ public class AuthController {
                                HttpServletRequest request,
                                Model model) {
 
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isPresent() && userOptional.get().isLocked()) {
-            model.addAttribute("error", "Twoje konto zostało zablokowane.");
-            return "auth/login";
-        }
-
         try {
+            userService.validateLockedStatus(username);
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
@@ -100,6 +93,9 @@ public class AuthController {
             );
             return "redirect:/";
 
+        } catch (UserIsLockedException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "auth/login";
         } catch (AuthenticationException ex) {
             model.addAttribute("error", "Nieprawidłowa nazwa użytkownika lub hasło.");
             return "auth/login";

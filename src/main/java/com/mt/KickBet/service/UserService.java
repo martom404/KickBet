@@ -2,6 +2,7 @@ package com.mt.KickBet.service;
 
 import com.mt.KickBet.exception.DuplicateUserException;
 import com.mt.KickBet.exception.NoUserException;
+import com.mt.KickBet.exception.UserIsLockedException;
 import com.mt.KickBet.model.dao.UserRepository;
 import com.mt.KickBet.model.dto.auth.RegisterForm;
 import com.mt.KickBet.model.dto.user.UpdateUserRequest;
@@ -111,5 +112,13 @@ public class UserService {
         user.setEmail(dto.email());
         user.setPoints(dto.points());
         userRepository.save(user);
+    }
+
+    public void validateLockedStatus(String username) {
+        userRepository.findByUsername(username).ifPresent(user -> {
+            if (user.isLocked()) {
+                throw new UserIsLockedException("Twoje konto zostało zablokowane.");
+            }
+        });
     }
 }
