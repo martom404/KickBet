@@ -65,10 +65,6 @@ public class User implements UserDetails {
     @Builder.Default
     private List<Bet> bets = new ArrayList<>();
 
-    @Column(name = "active", nullable = false)
-    @Builder.Default
-    private boolean active = true;
-
     @Column(name = "locked", nullable = false)
     @Builder.Default
     private boolean locked = false;

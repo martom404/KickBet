@@ -1,10 +1,9 @@
 package com.mt.KickBet.service;
 
 import com.mt.KickBet.model.dao.MatchRepository;
-import com.mt.KickBet.model.dto.football.FootballApiMatch;
-import com.mt.KickBet.model.dto.football.FootballApiResponse;
+import com.mt.KickBet.model.dto.api.FootballApiMatch;
+import com.mt.KickBet.model.dto.api.FootballApiResponse;
 import com.mt.KickBet.model.entity.Match;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,12 +18,16 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class FootballDataService {
+public class ApiService {
 
     private final MatchRepository matchRepository;
     private final RestTemplate restTemplate;
+
+    public ApiService(MatchRepository matchRepository, RestTemplate restTemplate) {
+        this.matchRepository = matchRepository;
+        this.restTemplate = restTemplate;
+    }
 
     @Value("${football.api.base-url}")
     private String baseUrl;
@@ -67,12 +70,12 @@ public class FootballDataService {
 
                     FootballApiResponse apiResponse = response.getBody();
 
-                    if (apiResponse == null || apiResponse.getMatches() == null) {
+                    if (apiResponse == null || apiResponse.matches() == null) {
                         log.warn("Brak meczów w odpowiedzi API dla ligi: {}", competitionId);
                         continue;
                     }
 
-                    for (FootballApiMatch apiMatch : apiResponse.getMatches()) {
+                    for (FootballApiMatch apiMatch : apiResponse.matches()) {
 
                         if (savedCount >= maxMatches) break;
 

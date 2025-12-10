@@ -1,4 +1,4 @@
-package com.mt.KickBet.model.dto.football;
+package com.mt.KickBet.model.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -2,12 +2,12 @@ package com.mt.KickBet.controller.admin;
 
 import com.mt.KickBet.exception.DuplicateUserException;
 import com.mt.KickBet.model.dto.user.UpdateUserRequest;
-import jakarta.validation.Valid;
-import org.springframework.ui.Model;
 import com.mt.KickBet.model.entity.User;
 import com.mt.KickBet.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/users")
 public class AdminUserController {
+
     private final UserService userService;
 
     public AdminUserController(UserService userService) {
@@ -26,14 +27,16 @@ public class AdminUserController {
     public String showUsers(@RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "20") int size,
                             Model model) {
-        Page<User> users = userService.getAllUsersForAdmin(page,size);
+
+        Page<User> users = userService.getAllUsersForAdmin(page, size);
         model.addAttribute("users", users);
         return "admin/user_list";
     }
 
     @GetMapping("/{id}/edit")
     public String editUser(@PathVariable Long id,
-                           Model model){
+                           Model model) {
+
         Optional<User> userOpt = userService.getUserByID(id);
 
         if (userOpt.isPresent()) {
@@ -52,9 +55,10 @@ public class AdminUserController {
 
     @PostMapping("/{id}/edit")
     public String editUser(@PathVariable Long id,
-                             @Valid @ModelAttribute("form") UpdateUserRequest dto,
-                             BindingResult bindingResult,
-                             Model model) {
+                           @Valid @ModelAttribute("form") UpdateUserRequest dto,
+                           BindingResult bindingResult,
+                           Model model) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("form", dto);
             model.addAttribute("userId", id);

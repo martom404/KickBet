@@ -1,4 +1,4 @@
-package com.mt.KickBet.model.dto.auth;
+package com.mt.KickBet.model.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
