@@ -94,18 +94,12 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoUserException("Użytkownik nie został znaleziony."));
 
-        if (!user.getUsername().equals(dto.username())) {
-            Optional<User> userWithSameUsername = userRepository.findByUsername(dto.username());
-            if (userWithSameUsername.isPresent()) {
-                throw new DuplicateUserException("Użytkownik z taką nazwą istnieje już w naszej bazie danych.");
-            }
+        if (!user.getUsername().equals(dto.username()) && userRepository.existsByUsername(dto.username())) {
+            throw new DuplicateUserException("Użytkownik z taką nazwą istnieje już w naszej bazie danych.");
         }
 
-        if (!user.getEmail().equals(dto.email())) {
-            Optional<User> userWithSameEmail = userRepository.findByEmail(dto.email());
-            if (userWithSameEmail.isPresent()) {
-                throw new DuplicateUserException("Użytkownik z takim emailem istnieje już w naszej bazie danych.");
-            }
+        if (!user.getEmail().equals(dto.email()) && userRepository.existsByEmail(dto.email())) {
+            throw new DuplicateUserException("Użytkownik z takim emailem istnieje już w naszej bazie danych.");
         }
 
         user.setUsername(dto.username());

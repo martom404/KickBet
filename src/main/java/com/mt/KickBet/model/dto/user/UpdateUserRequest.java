@@ -14,7 +14,8 @@ public record UpdateUserRequest(
         @Email(message = "Nieprawidłowy format adresu email")
         String email,
 
-        @NotNull
+        @NotNull(message = "Punkty są wymagane")
+        @DecimalMin(value = "0.0", message = "Punkty nie mogą być ujemne")
         Double points
 ) {
 }

@@ -41,13 +41,9 @@
 
             <div class="mb-2">
                 <strong>Liczba wygranych zakładów:</strong>
-                <span th:if="${user.bets != null}" th:text="${(user.points / 10)}"></span>
+                <span th:if="${user.bets != null}" th:text="${(winningBets)}"></span>
             </div>
 
-            <div class="mb-2">
-                <strong>Moja skuteczność:</strong>
-                <span th:text="${winRate != null ? winRate : '0'}"></span>%
-            </div>
 
             <div class="mb-2 mt-2 text-center">
                 <a th:href="@{/my-profile/change-password}" class="btn btn-warning">Zmień hasło</a>

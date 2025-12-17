@@ -1,8 +1,9 @@
 package com.mt.KickBet.controller.user;
 
-import com.mt.KickBet.model.dto.auth.ChangePasswordForm;
+import com.mt.KickBet.model.dto.user.ChangePasswordForm;
 import com.mt.KickBet.model.entity.User;
 import com.mt.KickBet.security.SecurityTools;
+import com.mt.KickBet.service.BetService;
 import com.mt.KickBet.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/my-profile")
 public class UserProfileController {
     private final UserService userService;
+    private final BetService betService;
 
-    public UserProfileController(UserService userService) {
+    public UserProfileController(UserService userService, BetService betService) {
         this.userService = userService;
+        this.betService = betService;
     }
 
     @GetMapping
@@ -32,6 +35,8 @@ public class UserProfileController {
                         model.addAttribute("user", user);
                         int rankPosition = userService.calculateRankPosition(user.getPoints());
                         model.addAttribute("rankPosition", rankPosition);
+                        int winningBets = betService.calculateWinningBets(user.getId());
+                        model.addAttribute("winningBets", winningBets);
                     });
         }
         return "user/my_profile";
