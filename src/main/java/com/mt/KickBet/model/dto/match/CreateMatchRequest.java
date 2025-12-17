@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 public record CreateMatchRequest(
         @NotBlank(message = "Nazwa drużyny gospodarzy jest wymagana")
         @Pattern(
-                regexp = "^[\\p{L} .-]{2,80}$",
-                message = "Dozwolone litery, spacje, kropka, myślnik (2-80 znaków)"
+                regexp = "^[\\p{L} .&-]{2,80}$",
+                message = "Dozwolone litery, spacje, kropka, myślnik i & (2-80 znaków)"
         )
         String homeTeam,
 
         @NotBlank(message = "Nazwa drużyny gości jest wymagana")
         @Pattern(
-                regexp = "^[\\p{L} .-]{2,80}$",
-                message = "Dozwolone litery, spacje, kropka, myślnik (2-80 znaków)"
+                regexp = "^[\\p{L} .&-]{2,80}$",
+                message = "Dozwolone litery, spacje, kropka, myślnik i & (2-80 znaków)"
         )
         String awayTeam,
 

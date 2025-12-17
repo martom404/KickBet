@@ -54,7 +54,7 @@ public class Match {
 
     @Column(name = "hidden", nullable = false)
     @Builder.Default
-    private Boolean hidden = false;
+    private boolean hidden = false;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp

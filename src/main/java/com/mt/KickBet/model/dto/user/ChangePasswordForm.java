@@ -8,7 +8,7 @@ public record ChangePasswordForm (
   @NotBlank(message="Musisz wpisać aktualne hasło!")
   String currentPassword,
 
-  @NotBlank(message="Musisz uzupełnic pole z nowym hasłem!")
+  @NotBlank(message="Musisz uzupełnić pole z nowym hasłem!")
   @Size(min=8, max=64, message="Hasło musi mieć od 8 do 64 znaków!")
   @Pattern(
           regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$",
