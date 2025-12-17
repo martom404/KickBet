@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/my-bets", "/my-profile/**", "/matches/*/bet").authenticated()
-                        .requestMatchers("/admin/**", "/sync").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception

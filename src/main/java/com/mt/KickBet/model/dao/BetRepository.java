@@ -16,4 +16,6 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     void deleteAllByMatchId(Long matchId);
 
     Optional <Bet> findByUserIdAndMatchId(Long userId, Long matchId);
+
+    List<Bet> findAllByUserIdAndWinningBetIsTrue(Long userId);
 }

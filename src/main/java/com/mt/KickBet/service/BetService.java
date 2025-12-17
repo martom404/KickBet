@@ -44,6 +44,10 @@ public class BetService {
         return betRepository.findAllByUserId(userId);
     }
 
+    public int calculateWinningBets(Long userId) {
+        return betRepository.findAllByUserIdAndWinningBetIsTrue(userId).size();
+    }
+
     @Transactional
     public void createBet(Long userId, Long matchId, CreateBetRequest request) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("Brak użytkownika w systemie."));
@@ -54,7 +58,7 @@ public class BetService {
             throw new IllegalStateException("Nie możesz obstawić meczu, który już się rozpoczął.");
         }
 
-        if(Boolean.TRUE.equals(match.getHidden())) {
+        if(match.isHidden()) {
             throw new IllegalStateException("Nie możesz obstawić meczu, który jest niedostępny.");
         }
 
@@ -85,15 +89,29 @@ public class BetService {
        List<Bet> bets = betRepository.findAllByMatchId(matchId);
 
        for(Bet bet : bets) {
+
+           if (bet.getPointsAwarded() != null && bet.getPointsAwarded() > 0.0) {
+                User user = bet.getUser();
+                user.setPoints(user.getPoints() - bet.getPointsAwarded());
+                userRepository.save(user);
+
+                bet.setWinningBet(false);
+                bet.setPointsAwarded(0.0);
+                betRepository.save(bet);
+           }
+
            if(bet.getPick().equals(finalResult)) {
-               double pointsAwarded = (bet.getOddsAtBetTime() * 1.0);
+               if(bet.getPointsAwarded() == null || bet.getPointsAwarded() == 0.0) {
+                   double pointsAwarded = bet.getOddsAtBetTime();
 
-               bet.setPointsAwarded(pointsAwarded);
-               betRepository.save(bet);
+                   bet.setPointsAwarded(pointsAwarded);
+                   bet.setWinningBet(true);
+                   betRepository.save(bet);
 
-               User user = bet.getUser();
-               user.setPoints(user.getPoints() + pointsAwarded);
-               userRepository.save(user);
+                   User user = bet.getUser();
+                   user.setPoints(user.getPoints() + pointsAwarded);
+                   userRepository.save(user);
+               }
            }
        }
     }

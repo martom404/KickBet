@@ -42,9 +42,13 @@ public class Bet {
     @Column(name = "pick", nullable = false)
     private Result pick;
 
-    @Column(nullable = false)
+    @Column(name = "points_awarded", nullable = false)
     @Builder.Default
     private Double pointsAwarded = 0.0;
+
+    @Column(name = "winning_bet", nullable = false)
+    @Builder.Default
+    private boolean winningBet = false;
 
     @Column(name = "created_at", updatable = false, nullable = false)
     @CreationTimestamp
