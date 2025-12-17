@@ -30,7 +30,7 @@
                 <div class="col-md-3">
                     <label for="sortBy" class="form-label">Sortuj według:</label>
                     <select name="sortBy" id="sortBy" class="form-select">
-                        <option value="createdAt" th:selected="${currentSortBy == 'startTime'}">Data utworzenia konta</option>
+                        <option value="createdAt" th:selected="${currentSortBy == 'createdAt'}">Data utworzenia konta</option>
                         <option value="username" th:selected="${currentSortBy == 'username'}">Nazwa użytkownika</option>
                         <option value="points" th:selected="${currentSortBy == 'points'}">Punkty</option>
                     </select>
@@ -129,7 +129,7 @@
         </div>
 
         <div>
-            <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${currenSize}), sortBy=${currentSortBy}, sortDir=${currentSortDir})"
+            <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${currentSize}, sortBy=${currentSortBy}, sortDir=${currentSortDir})}"
                class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>

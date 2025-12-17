@@ -12,6 +12,10 @@ import com.mt.KickBet.model.entity.Result;
 import com.mt.KickBet.model.entity.User;
 import jakarta.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,6 +46,15 @@ public class BetService {
     @Transactional
     public List<Bet> getUserBets(Long userId) {
         return betRepository.findAllByUserId(userId);
+    }
+
+    @Transactional
+    public Page<Bet> getUserBets(Long userId, int page, int size, String sortBy, String sortDir) {
+        Sort.Direction direction = "desc".equalsIgnoreCase(sortDir) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return betRepository.findAllByUserId(pageable, userId);
     }
 
     public int calculateWinningBets(Long userId) {

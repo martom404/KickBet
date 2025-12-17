@@ -1,6 +1,6 @@
 package com.mt.KickBet.controller.match;
 
-import com.mt.KickBet.service.FootballDataService;
+import com.mt.KickBet.service.ApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/matches")
 public class FootballApiController {
 
-    private final FootballDataService footballDataService;
+    private final ApiService apiService;
 
     @PostMapping("/sync")
     public String syncMatches() {
-        footballDataService.syncMatches();
+        apiService.syncMatches();
         return "redirect:/admin/matches";
     }
 }

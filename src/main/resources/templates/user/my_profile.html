@@ -41,7 +41,7 @@
 
             <div class="mb-2">
                 <strong>Liczba wygranych zakładów:</strong>
-                <span th:if="${user.bets != null}" th:text="${(winningBets)}"></span>
+                <span th:text="${winningBets != null ? winningBets : 0}"></span>
             </div>
 
 

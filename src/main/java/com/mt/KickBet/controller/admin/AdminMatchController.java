@@ -108,6 +108,8 @@ public class AdminMatchController {
             Result enumResult = Result.valueOf(result);
             matchService.setFinalResult(id, enumResult);
             redirectAttributes.addFlashAttribute("successMessage", "Wynik meczu został ustawiony pomyślnie!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Nieprawidłowa wartość wyniku!");
         } catch (IllegalStateException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Nie możesz ustawić wyniku dla meczu, który jeszcze nie został rozpoczęty!.");
         }

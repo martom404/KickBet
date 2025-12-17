@@ -127,7 +127,7 @@
 
     <div th:if="${matches.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-3">
         <div>
-            <a th:if="${!matches.first}" th:href="@{/matches(page=${matches.number - 1}, size=${currentSize}, sort=${currentSort}, direction=${currentDirection})}"
+            <a th:if="${!matches.first}" th:href="@{/matches(page=${matches.number - 1}, size=${currentSize}, sortBy=${currentSortBy}, sortDir=${currentSortDir})}"
                class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
@@ -141,7 +141,7 @@
         </div>
 
         <div>
-            <a th:if="${!matches.last}" th:href="@{/matches(page=${matches.number + 1}, size=${currentSize}, sort=${currentSort}, direction=${currentDirection})}"
+            <a th:if="${!matches.last}" th:href="@{/matches(page=${matches.number + 1}, size=${currentSize}, sortBy=${currentSortBy}, sortDir=${currentSortDir})}"
                class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>

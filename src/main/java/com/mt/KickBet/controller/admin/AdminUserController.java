@@ -32,7 +32,7 @@ public class AdminUserController {
                             Model model) {
 
         if(page < 0) page = 0;
-        if(size < 1 || size > 100) size = 25;
+        if(size < 1 || size > 100) size = 20;
 
         List<String> sortFields = List.of("createdAt", "username", "points");
         if(!sortFields.contains(sortBy)) sortBy = "createdAt";
