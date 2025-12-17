@@ -34,9 +34,11 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public Page<User> getAllUsersForAdmin(int page, int size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "createdAt");
+    public Page<User> getAllUsersForAdmin(int page, int size, String sortBy, String sortDir) {
+        Sort.Direction direction = "desc".equalsIgnoreCase(sortDir) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
+
         return userRepository.findAll(pageable);
     }
 

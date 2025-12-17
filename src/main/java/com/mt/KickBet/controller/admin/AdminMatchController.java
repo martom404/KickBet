@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/matches")
@@ -28,10 +29,23 @@ public class AdminMatchController {
     @GetMapping
     public String listMatches(@RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "25") int size,
+                              @RequestParam(defaultValue = "startTime") String sortBy,
+                              @RequestParam(defaultValue = "asc") String sortDir,
                               Model model) {
 
-        Page<Match> matchesPage = matchService.getAllMatchesForAdmin(page, size);
+        if(page < 0) page = 0;
+        if(size < 1 || size > 100) size = 25;
+
+        List<String> sortFields = List.of("startTime");
+        if(!sortFields.contains(sortBy)) sortBy = "startTime";
+
+        Page<Match> matchesPage = matchService.getAllMatchesForAdmin(page, size, sortBy, sortDir);
         model.addAttribute("matches", matchesPage);
+
+        model.addAttribute("currentSize", size);
+        model.addAttribute("currentSortBy", sortBy);
+        model.addAttribute("currentSortDir", sortDir);
+
         return "admin/match_list";
     }
 

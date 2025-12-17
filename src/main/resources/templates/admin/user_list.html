@@ -24,6 +24,44 @@
         </div>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-body">
+            <form th:action="@{/admin/users}" method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="sortBy" class="form-label">Sortuj według:</label>
+                    <select name="sortBy" id="sortBy" class="form-select">
+                        <option value="createdAt" th:selected="${currentSortBy == 'startTime'}">Data utworzenia konta</option>
+                        <option value="username" th:selected="${currentSortBy == 'username'}">Nazwa użytkownika</option>
+                        <option value="points" th:selected="${currentSortBy == 'points'}">Punkty</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="sortDir" class="form-label">Kierunek:</label>
+                    <select name="sortDir" id="sortDir" class="form-select">
+                        <option value="asc" th:selected="${currentSortDir == 'asc'}">Rosnąco</option>
+                        <option value="desc" th:selected="${currentSortDir == 'desc'}">Malejąco</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="size" class="form-label">Na stronie:</label>
+                    <select name="size" id="size" class="form-select">
+                        <option value="10" th:selected="${currentSize == 10}">10</option>
+                        <option value="25" th:selected="${currentSize == 25}">25</option>
+                        <option value="50" th:selected="${currentSize == 50}">50</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-funnel"></i> Filtruj
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="content-container">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
@@ -77,7 +115,7 @@
     <div th:if="${users.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-3">
 
         <div>
-            <a th:if="${!users.first}" th:href="@{/admin/users(page=${users.number - 1}, size=${users.size})}"
+            <a th:if="${!users.first}" th:href="@{/admin/users(page=${users.number - 1}, size=${currentSize}, sortBy=${currentSortBy}, sortDir=${currentSortDir})}"
                class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
@@ -91,7 +129,7 @@
         </div>
 
         <div>
-            <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${users.size})}"
+            <a th:if="${!users.last}" th:href="@{/admin/users(page=${users.number + 1}, size=${currenSize}), sortBy=${currentSortBy}, sortDir=${currentSortDir})"
                class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>

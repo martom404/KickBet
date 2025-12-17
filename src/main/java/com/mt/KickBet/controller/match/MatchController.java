@@ -33,9 +33,21 @@ public class MatchController {
     @GetMapping
     public String showMatches(@RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "25") int size,
+                              @RequestParam(defaultValue = "startTime") String sortBy,
+                              @RequestParam(defaultValue = "asc") String sortDir,
                               Model model) {
-        Page<Match> matches = matchService.getAllMatches(page, size);
+
+        if(page < 0) page = 0;
+        if(size < 1 || size > 100) size = 25;
+
+        List<String> sortFields = List.of("startTime");
+        if(!sortFields.contains(sortBy)) sortBy = "startTime";
+
+        Page<Match> matches = matchService.getAllMatches(page, size, sortBy, sortDir);
         model.addAttribute("matches", matches);
+        model.addAttribute("currentSize", size);
+        model.addAttribute("currentSortBy", sortBy);
+        model.addAttribute("currentSortDir", sortDir);
 
         User currentUser = SecurityTools.getUser();
         if (currentUser != null) {
@@ -54,6 +66,7 @@ public class MatchController {
     public String placeBet(@PathVariable Long matchId,
                            @RequestParam Result pick,
                            RedirectAttributes redirectAttributes) {
+
         User currentUser = SecurityTools.getUser();
         if (currentUser == null) {
             redirectAttributes.addFlashAttribute("error", "Musisz być zalogowany do obstawiania!");

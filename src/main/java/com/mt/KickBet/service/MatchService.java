@@ -1,5 +1,6 @@
 package com.mt.KickBet.service;
 
+import com.mt.KickBet.exception.NoMatchException;
 import com.mt.KickBet.model.dao.BetRepository;
 import com.mt.KickBet.model.dao.MatchRepository;
 import com.mt.KickBet.model.dao.UserRepository;
@@ -35,16 +36,20 @@ public class MatchService {
         this.betService = betService;
     }
 
-    public Page<Match> getAllMatches(int page, int size) {
+    public Page<Match> getAllMatches(int page, int size, String sortBy, String sortDir) {
         LocalDateTime now = LocalDateTime.now();
-        Sort sort = Sort.by(Sort.Direction.ASC, "startTime");
+        Sort.Direction direction = "desc".equalsIgnoreCase(sortDir) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
+
         return matchRepository.findAvailableMatches(now, pageable);
     }
 
-    public Page<Match> getAllMatchesForAdmin(int page, int size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "startTime");
+    public Page<Match> getAllMatchesForAdmin(int page, int size, String sortBy, String sortDir) {
+        Sort.Direction direction = "desc".equalsIgnoreCase(sortDir) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
+
         return matchRepository.findAll(pageable);
     }
 
@@ -67,47 +72,58 @@ public class MatchService {
 
     @Transactional
     public void updateMatch(Long id, UpdateMatchRequest request) {
-        matchRepository.findById(id).ifPresent(match -> {
-            match.setHomeTeam(request.homeTeam());
-            match.setAwayTeam(request.awayTeam());
-            match.setStartTime(request.startTime());
-            match.setOddsHome(request.oddsHome());
-            match.setOddsDraw(request.oddsDraw());
-            match.setOddsAway(request.oddsAway());
-            matchRepository.save(match);
-        });
+        Match match = matchRepository.findById(id)
+                .orElseThrow(() -> new NoMatchException("Brak meczu w systemie."));
+
+        match.setHomeTeam(request.homeTeam());
+        match.setAwayTeam(request.awayTeam());
+        match.setStartTime(request.startTime());
+        match.setOddsHome(request.oddsHome());
+        match.setOddsDraw(request.oddsDraw());
+        match.setOddsAway(request.oddsAway());
+        matchRepository.save(match);
     }
 
     @Transactional
     public void setFinalResult(Long id, Result result) {
-        matchRepository.findById(id).ifPresent(match -> {
-            match.setFinalResult(result);
-            match.setHidden(true);
-            matchRepository.save(match);
-            betService.awardPointsForMatch(id, result);
-        });
+        Match match = matchRepository.findById(id)
+                .orElseThrow(() -> new NoMatchException("Brak meczu w systemie."));
+
+        LocalDateTime now = LocalDateTime.now();
+        if(match.getStartTime().isAfter(now)) {
+            throw new IllegalStateException("Nie można ustawić wyniku dla meczu, który jeszcze się nie rozpoczął.");
+        }
+
+        match.setFinalResult(result);
+        match.setHidden(true);
+        matchRepository.save(match);
+        betService.awardPointsForMatch(id, result);
     }
 
     @Transactional
     public void deleteMatch(Long id) {
+        Match match = matchRepository.findById(id)
+                .orElseThrow(() -> new NoMatchException("Brak meczu w systemie."));
+
         List<Bet> bets = betRepository.findAllByMatchId(id);
 
         for (Bet bet : bets) {
-            if(bet.getPointsAwarded() != 0) {
+            if(bet.getPointsAwarded() != null && bet.getPointsAwarded() > 0.0) {
                 User user = bet.getUser();
                 user.setPoints(user.getPoints() - bet.getPointsAwarded());
                 userRepository.save(user);
             }
         }
         betRepository.deleteAllByMatchId(id);
-        matchRepository.deleteById(id);
+        matchRepository.delete(match);
     }
 
     @Transactional
     public void makeHidden(Long id) {
-        matchRepository.findById(id).ifPresent(match -> {
-            match.setHidden(!Boolean.TRUE.equals(match.getHidden()));
-            matchRepository.save(match);
-        });
+        Match match = matchRepository.findById(id)
+                .orElseThrow(() -> new NoMatchException("Brak meczu w systemie."));
+
+        match.setHidden(!match.isHidden());
+        matchRepository.save(match);
     }
 }

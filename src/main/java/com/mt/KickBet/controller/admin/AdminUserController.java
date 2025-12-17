@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,10 +27,22 @@ public class AdminUserController {
     @GetMapping
     public String showUsers(@RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "20") int size,
+                            @RequestParam(defaultValue = "createdAt") String sortBy,
+                            @RequestParam(defaultValue = "desc") String sortDir,
                             Model model) {
 
-        Page<User> users = userService.getAllUsersForAdmin(page, size);
+        if(page < 0) page = 0;
+        if(size < 1 || size > 100) size = 25;
+
+        List<String> sortFields = List.of("createdAt", "username", "points");
+        if(!sortFields.contains(sortBy)) sortBy = "createdAt";
+
+        Page<User> users = userService.getAllUsersForAdmin(page, size, sortBy, sortDir);
         model.addAttribute("users", users);
+        model.addAttribute("currentSize", size);
+        model.addAttribute("currentSortBy", sortBy);
+        model.addAttribute("currentSortDir", sortDir);
+
         return "admin/user_list";
     }
 

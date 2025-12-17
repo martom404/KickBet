@@ -19,6 +19,42 @@
         <h1><i class="bi bi-clock-history"></i> Nadchodzące spotkania</h1>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-body">
+            <form th:action="@{/matches}" method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="sortBy" class="form-label">Sortuj według:</label>
+                    <select name="sortBy" id="sortBy" class="form-select">
+                        <option value="startTime" th:selected="${currentSortBy == 'startTime'}">Data meczu</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="sortDir" class="form-label">Kierunek:</label>
+                    <select name="sortDir" id="sortDir" class="form-select">
+                        <option value="asc" th:selected="${currentSortDir == 'asc'}">Rosnąco</option>
+                        <option value="desc" th:selected="${currentSortDir == 'desc'}">Malejąco</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="size" class="form-label">Na stronie:</label>
+                    <select name="size" id="size" class="form-select">
+                        <option value="10" th:selected="${currentSize == 10}">10</option>
+                        <option value="25" th:selected="${currentSize == 25}">25</option>
+                        <option value="50" th:selected="${currentSize == 50}">50</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-funnel"></i> Filtruj
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div th:if="${success}" role="alert" class="alert alert-success">
          <span th:text="${success}"></span>
     </div>
@@ -44,21 +80,24 @@
                 <tr th:each="match : ${matches.content}">
                     <td><strong th:text="${match.homeTeam}"></strong></td>
                     <td><strong th:text="${match.awayTeam}"></strong></td>
+
                     <td>
                         <span th:text="${#temporals.format(match.startTime, 'dd.MM.yyyy HH:mm')}"></span>
                     </td>
+
                     <td th:if="${betsByMatchId != null}">
                         <span th:if="${betsByMatchId.containsKey(match.id)}">
-                            <span th:with="bet=${betsByMatchId.get(match.id)}">
-                                <strong><span th:if="${bet.pick == T(com.mt.KickBet.model.entity.Result).HOME}" class=""> Gospodarze </span></strong>
-                                <strong><span th:if="${bet.pick == T(com.mt.KickBet.model.entity.Result).DRAW}"> Remis </span></strong>
-                                <strong><span th:if="${bet.pick == T(com.mt.KickBet.model.entity.Result).AWAY}"> Goście </span></strong>
+                            <span th:with="bet=${betsByMatchId.get(match.id)}, Result=${T(com.mt.KickBet.model.entity.Result)}">
+                                <strong><span th:if="${bet.pick == Result.HOME}"> Gospodarze </span></strong>
+                                <strong><span th:if="${bet.pick == Result.DRAW}"> Remis </span></strong>
+                                <strong><span th:if="${bet.pick == Result.AWAY}"> Goście </span></strong>
                             </span>
                         </span>
                         <span th:if="${!betsByMatchId.containsKey(match.id)}">
                             Brak zakładu
                         </span>
                     </td>
+
                     <td th:if="${betsByMatchId != null}">
                         <form th:action="@{/matches/{id}/bet(id=${match.id})}" method="post">
                             <button type = "submit" class="btn btn-success" name="pick" value="HOME"> 1 </button>
@@ -66,16 +105,17 @@
                             <button type = "submit" class="btn btn-danger" name="pick" value="AWAY"> 2 </button>
                         </form>
                     </td>
+
                     <td>
-                        1: <strong th:text="${match.oddsHome}"></strong><br>
-                        X: <strong th:text="${match.oddsDraw}"></strong><br>
-                        2: <strong th:text="${match.oddsAway}"></strong><br>
+                        1: <strong th:text="${#numbers.formatDecimal(match.oddsHome, 1, 2)}"></strong><br>
+                        X: <strong th:text="${#numbers.formatDecimal(match.oddsDraw, 1, 2)}"></strong><br>
+                        2: <strong th:text="${#numbers.formatDecimal(match.oddsAway, 1, 2)}"></strong><br>
                     </td>
                 </tr>
 
 
                 <tr th:if="${matches.isEmpty()}">
-                    <td th:colspan="${betsByMatchId != null ? 6 : 3}" class="text-center text-muted py-5">
+                    <td th:colspan="${betsByMatchId != null ? 6 : 4}" class="text-center text-muted py-5">
                         <i class="bi bi-inbox" ></i>
                         <p class="mt-3 mb-0">Brak meczy.</p>
                     </td>
@@ -87,7 +127,7 @@
 
     <div th:if="${matches.totalPages > 1}" class="d-flex justify-content-between align-items-center mt-3">
         <div>
-            <a th:if="${!matches.first}" th:href="@{/matches(page=${matches.number - 1}, size=${matches.size})}"
+            <a th:if="${!matches.first}" th:href="@{/matches(page=${matches.number - 1}, size=${currentSize}, sort=${currentSort}, direction=${currentDirection})}"
                class="btn btn-primary">
                 <i class="bi bi-chevron-left"></i> Poprzednia
             </a>
@@ -101,7 +141,7 @@
         </div>
 
         <div>
-            <a th:if="${!matches.last}" th:href="@{/matches(page=${matches.number + 1}, size=${matches.size})}"
+            <a th:if="${!matches.last}" th:href="@{/matches(page=${matches.number + 1}, size=${currentSize}, sort=${currentSort}, direction=${currentDirection})}"
                class="btn btn-primary">
                 Następna <i class="bi bi-chevron-right"></i>
             </a>
