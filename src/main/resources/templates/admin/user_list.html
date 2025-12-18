@@ -93,7 +93,8 @@
                     <td>
                         <div class="btn-group" role="group">
                             <form th:action="@{/admin/users/{id}/block(id=${user.id})}" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-warning"> Zablokuj konto </button>
+                                <button type="submit" class="btn btn-sm btn-warning" th:text="${user.locked ? 'Odblokuj' : 'Zablokuj'}">
+                                </button>
                             </form>
 
                             <a th:href="@{/admin/users/{id}/edit(id=${user.id})}" class="btn btn-sm btn-primary d-inline" > Edytuj </a>

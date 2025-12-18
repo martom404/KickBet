@@ -38,6 +38,7 @@ public class AdminUserController {
         if(!sortFields.contains(sortBy)) sortBy = "createdAt";
 
         Page<User> users = userService.getAllUsersForAdmin(page, size, sortBy, sortDir);
+
         model.addAttribute("users", users);
         model.addAttribute("currentSize", size);
         model.addAttribute("currentSortBy", sortBy);
@@ -54,6 +55,7 @@ public class AdminUserController {
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
+
             model.addAttribute("form", new UpdateUserRequest(
                     user.getUsername(),
                     user.getEmail(),

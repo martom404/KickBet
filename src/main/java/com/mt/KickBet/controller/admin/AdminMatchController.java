@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/matches")
@@ -40,8 +41,8 @@ public class AdminMatchController {
         if(!sortFields.contains(sortBy)) sortBy = "startTime";
 
         Page<Match> matchesPage = matchService.getAllMatchesForAdmin(page, size, sortBy, sortDir);
-        model.addAttribute("matches", matchesPage);
 
+        model.addAttribute("matches", matchesPage);
         model.addAttribute("currentSize", size);
         model.addAttribute("currentSortBy", sortBy);
         model.addAttribute("currentSortDir", sortDir);
@@ -70,19 +71,24 @@ public class AdminMatchController {
     public String updateMatch(@PathVariable Long id,
                               Model model) {
 
-        return matchService.getMatchById(id)
-                .map(match -> {
-                    model.addAttribute("form", new UpdateMatchRequest(
-                            match.getHomeTeam(),
-                            match.getAwayTeam(),
-                            match.getStartTime(),
-                            match.getOddsHome(),
-                            match.getOddsDraw(),
-                            match.getOddsAway()
-                    ));
-                    model.addAttribute("matchId", id);
-                    return "admin/match_editform";
-                }).orElse("redirect:/admin/matches");
+        Optional<Match> matchOpt = matchService.getMatchById(id);
+
+        if(matchOpt.isPresent()) {
+            Match match = matchOpt.get();
+
+            model.addAttribute("form", new UpdateMatchRequest(
+                    match.getHomeTeam(),
+                    match.getAwayTeam(),
+                    match.getStartTime(),
+                    match.getOddsHome(),
+                    match.getOddsDraw(),
+                    match.getOddsAway()
+            ));
+            model.addAttribute("matchId", id);
+            return "admin/match_editform";
+        } else {
+            return "redirect:/admin/matches";
+        }
     }
 
     @PostMapping("/{id}/edit")
