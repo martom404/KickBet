@@ -31,7 +31,7 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="user, iterStat : ${users.content}" 
+                <tr th:each="user : ${users.content}"
                     th:classappend="${currentUserId != null && currentUserId == user.id} ? 'table-info'">
                     <td>
                         <span th:if="${userPositions[user.id] == 1}" class="rank-badge rank-1">

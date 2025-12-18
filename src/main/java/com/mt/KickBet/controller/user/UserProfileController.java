@@ -37,6 +37,8 @@ public class UserProfileController {
                         model.addAttribute("rankPosition", rankPosition);
                         int winningBets = betService.calculateWinningBets(user.getId());
                         model.addAttribute("winningBets", winningBets);
+                        int winPercentage = betService.calculateWinningPercentage(user.getId());
+                        model.addAttribute("winPercentage", winPercentage);
                     });
         }
         return "user/my_profile";

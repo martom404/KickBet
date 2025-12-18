@@ -44,6 +44,10 @@
                 <span th:text="${winningBets != null ? winningBets : 0}"></span>
             </div>
 
+            <div class="mb-2">
+                <strong>Twoja skuteczność:</strong>
+                <span th:text="${winPercentage != null ? winPercentage : 0}"></span>%
+            </div>
 
             <div class="mb-2 mt-2 text-center">
                 <a th:href="@{/my-profile/change-password}" class="btn btn-warning">Zmień hasło</a>

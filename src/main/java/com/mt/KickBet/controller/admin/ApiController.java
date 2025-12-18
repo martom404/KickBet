@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller.match;
+package com.mt.KickBet.controller.admin;
 
 import com.mt.KickBet.service.ApiService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/matches")
-public class FootballApiController {
+public class ApiController {
 
     private final ApiService apiService;
 

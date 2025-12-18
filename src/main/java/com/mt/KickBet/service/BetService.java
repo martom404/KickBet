@@ -61,6 +61,16 @@ public class BetService {
         return betRepository.findAllByUserIdAndWinningBetIsTrue(userId).size();
     }
 
+    public int calculateWinningPercentage(Long userId) {
+        int totalBets = betRepository.findAllByUserId(userId).size();
+        if (totalBets == 0) {
+            return 0;
+        } else {
+            int winningBets = calculateWinningBets(userId);
+            return (int) Math.round((winningBets / (double) totalBets) * 100);
+        }
+    }
+
     @Transactional
     public void createBet(Long userId, Long matchId, CreateBetRequest request) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NoUserException("Brak użytkownika w systemie."));

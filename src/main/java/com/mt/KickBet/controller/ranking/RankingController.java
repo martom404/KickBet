@@ -1,4 +1,4 @@
-package com.mt.KickBet.controller.user;
+package com.mt.KickBet.controller.ranking;
 
 
 import com.mt.KickBet.model.entity.User;
@@ -28,6 +28,9 @@ public class RankingController {
     public String showRanking(@RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "12") int size,
                               Model model) {
+
+        if(page < 0) page = 0;
+        if(size < 1 || size > 12) size = 12;
         Page<User> users = userService.getAllUsers(page, size);
         
         Map<Long, Integer> userPositions = new HashMap<>();
