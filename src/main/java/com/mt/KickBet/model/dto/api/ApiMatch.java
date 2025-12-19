@@ -1,7 +1,6 @@
 package com.mt.KickBet.model.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,23 +8,11 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FootballApiMatch {
+public class ApiMatch {
 
     private Long id;
-
-    @JsonProperty("homeTeam")
-    private Team homeTeam;
-
-    @JsonProperty("awayTeam")
-    private Team awayTeam;
-
-    @JsonProperty("utcDate")
     private String utcDate;
-
     private String status;
-
-    @JsonProperty("odds")
-    private Odds odds;
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -33,18 +20,18 @@ public class FootballApiMatch {
         private String name;
     }
 
+    private Team homeTeam;
+    private Team awayTeam;
+
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Odds {
-        @JsonProperty("homeWin")
         private Double homeWin;
-
-        @JsonProperty("draw")
         private Double draw;
-
-        @JsonProperty("awayWin")
         private Double awayWin;
     }
+
+    private Odds odds;
 
     public LocalDateTime getStartTime() {
         if (utcDate == null || utcDate.isEmpty()) {

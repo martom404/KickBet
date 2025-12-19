@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record FootballApiResponse(
+public record ApiResponse(
         @JsonProperty("matches")
-        List<FootballApiMatch> matches
+        List<ApiMatch> matches
 ) {}

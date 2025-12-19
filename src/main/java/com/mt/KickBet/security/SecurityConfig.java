@@ -34,7 +34,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> response.sendRedirect(loginUrl))
-                        .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect("/403"))
+                        .accessDeniedHandler((request, response, accessDeniedException) -> response.sendRedirect(loginUrl))
                 );
         return http.build();
     }

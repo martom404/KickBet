@@ -22,14 +22,12 @@
 
                 <a th:href="@{/admin/users}" class="btn btn-primary btn-lg"> Przejdź do użytkowników </a>
 
-                <a th:href="@{/admin/matches/new}" class="btn btn-primary btn-lg">
-                    <i class="bi bi-plus-circle"></i> Dodaj mecz
-                </a>
+                <a th:href="@{/admin/matches/new}" class="btn btn-primary btn-lg"> Dodaj mecz </a>
 
                 <form th:action="@{/admin/matches/sync}" method="post">
-                    <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="bi bi-cloud-download"></i> Pobierz mecze z API
-                    </button>
+                    <strong><label style="color:black">Max meczy do pobrania: </label></strong>
+                    <input type="number" min="1" max="500" step="1" name="maxMatches" value="15" />
+                    <button type="submit" class="btn btn-primary btn-lg"> Pobierz mecze z API </button>
                 </form>
 
             </div>
@@ -37,6 +35,11 @@
     </div>
 
     <div>
+        <div th:if="${message}" class="alert alert-info alert-dismissible fade show" role="alert">
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
             <span th:text="${successMessage}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

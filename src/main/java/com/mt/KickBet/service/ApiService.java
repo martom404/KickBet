@@ -1,8 +1,8 @@
 package com.mt.KickBet.service;
 
 import com.mt.KickBet.model.dao.MatchRepository;
-import com.mt.KickBet.model.dto.api.FootballApiMatch;
-import com.mt.KickBet.model.dto.api.FootballApiResponse;
+import com.mt.KickBet.model.dto.api.ApiMatch;
+import com.mt.KickBet.model.dto.api.ApiResponse;
 import com.mt.KickBet.model.entity.Match;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,44 +38,37 @@ public class ApiService {
     @Value("${football.api.competition-id}")
     private String competitionIds;
 
-    @Value("${football.api.max-matches}")
-    private int maxMatches;
-
     @Transactional
-    public int syncMatches() {
-
+    public int syncMatches(int maxMatches) {
         try {
-
             String[] leagues = competitionIds.split(",");
             int savedCount = 0;
 
             for (String competitionId : leagues) {
-
                 if (savedCount >= maxMatches) break;
 
                 try {
-
                     String url = String.format("%s/competitions/%s/matches", baseUrl, competitionId);
 
                     HttpHeaders headers = new HttpHeaders();
                     headers.set("X-Auth-Token", apiToken);
-                    HttpEntity<String> entity = new HttpEntity<>(headers);
+                    HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-                    ResponseEntity<FootballApiResponse> response = restTemplate.exchange(
+                    ResponseEntity<ApiResponse> response = restTemplate.exchange(
                             url,
                             HttpMethod.GET,
                             entity,
-                            FootballApiResponse.class
+                            ApiResponse.class
                     );
 
-                    FootballApiResponse apiResponse = response.getBody();
+                    ApiResponse apiResponse = response.getBody();
 
                     if (apiResponse == null || apiResponse.matches() == null) {
                         log.warn("Brak meczów w odpowiedzi API dla ligi: {}", competitionId);
                         continue;
                     }
 
-                    for (FootballApiMatch apiMatch : apiResponse.matches()) {
+                    for (ApiMatch apiMatch : apiResponse.matches()) {
 
                         if (savedCount >= maxMatches) break;
 
@@ -104,17 +97,15 @@ public class ApiService {
                         matchRepository.save(match);
                         savedCount++;
 
-                        log.debug("Zapisano mecz: {} vs {} ({})", match.getHomeTeam(), match.getAwayTeam(), competitionId);
+                        log.info("Zapisano mecz: {} vs {} ({})", match.getHomeTeam(), match.getAwayTeam(), competitionId);
                     }
 
                 } catch (Exception e) {
                     log.error("Błąd podczas pobierania meczów z ligi {}: {}", competitionId, e.getMessage());
                 }
             }
-
             log.info("Synchronizacja zakończona. Zapisano {} nowych meczów", savedCount);
             return savedCount;
-
         } catch (Exception e) {
             log.error("Błąd podczas synchronizacji meczów z API", e);
             throw new RuntimeException("Nie udało się pobrać meczów z API: " + e.getMessage(), e);
